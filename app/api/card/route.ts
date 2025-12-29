@@ -1,4 +1,6 @@
 export const runtime = "edge";
+import { getTheme } from "@/lib/themes";
+import type { Theme } from "@/lib/themes";
 
 type Day = { date: string; count: number };
 
@@ -110,6 +112,7 @@ function iconPath(kind: string) {
 }
 
 function svgCard(input: {
+  theme: Theme;
   total: number;
   current: number;
   longest: number;
@@ -122,6 +125,7 @@ function svgCard(input: {
   contributedTo: number;
 }) {
   const {
+    theme,
     total,
     current,
     longest,
@@ -193,19 +197,19 @@ function svgCard(input: {
      xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GitHub stats card">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="${W}" y2="${H}" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#070B14"/>
-      <stop offset="1" stop-color="#0B1220"/>
+      <stop stop-color="${theme.bgStops[0]}"/>
+      <stop offset="1" stop-color="${theme.bgStops[1]}"/>
     </linearGradient>
 
     <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
-      <stop stop-color="#60A5FA"/>
-      <stop offset="0.55" stop-color="#A78BFA"/>
-      <stop offset="1" stop-color="#34D399"/>
+      <stop stop-color="${theme.accentStops[0]}"/>
+      <stop offset="0.55" stop-color="${theme.accentStops[1]}"/>
+      <stop offset="1" stop-color="${theme.accentStops[2]}"/>
     </linearGradient>
 
     <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
-      <stop stop-color="#60A5FA" stop-opacity="0.22"/>
-      <stop offset="1" stop-color="#60A5FA" stop-opacity="0"/>
+      <stop stop-color="${theme.chartFill}" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="${theme.chartFill}" stop-opacity="0"/>
     </linearGradient>
 
     <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
@@ -214,80 +218,92 @@ function svgCard(input: {
   </defs>
 
   <rect x="${pad}" y="${pad}" width="${W - pad * 2}" height="${H - pad * 2}"
-        rx="${r}" fill="url(#bg)" stroke="#1F2937" filter="url(#softShadow)"/>
+        rx="${r}" fill="url(#bg)" stroke="${
+    theme.cardStroke
+  }" filter="url(#softShadow)"/>
 
   <path d="M${W - 360} ${pad} L${W - 140} ${pad} L${W - 40} ${H - pad} L${
     W - 260
   } ${H - pad} Z"
-        fill="url(#accent)" opacity="0.06"/>
+        fill="url(#accent)" opacity="0.07"/>
 
   <line x1="${leftDivider}" y1="52" x2="${leftDivider}" y2="${
     H - 52
-  }" stroke="#1F2937"/>
+  }" stroke="${theme.divider}"/>
   <line x1="${rightDivider}" y1="52" x2="${rightDivider}" y2="${
     H - 52
-  }" stroke="#1F2937"/>
+  }" stroke="${theme.divider}"/>
 
   <g transform="translate(${leftColX},${leftTopY})">
     <g>
-      <rect x="0" y="0" width="${chartW}" height="${chartH}" rx="14" fill="#0A0F1A" stroke="#1F2937"/>
+      <rect x="0" y="0" width="${chartW}" height="${chartH}" rx="14" fill="${
+    theme.panelBg
+  }" stroke="${theme.panelStroke}"/>
       ${gridYs
         .map(
           (y) =>
             `<line x1="${chartPad}" y1="${y.toFixed(2)}" x2="${(
               chartW - chartPad
-            ).toFixed(2)}" y2="${y.toFixed(
-              2
-            )}" stroke="#1F2937" opacity="0.55"/>`
+            ).toFixed(2)}" y2="${y.toFixed(2)}" stroke="${
+              theme.panelStroke
+            }" opacity="0.55"/>`
         )
         .join("\n")}
       <path d="${areaD}" fill="url(#chartFill)"/>
       <path d="${lineD}" stroke="url(#accent)" stroke-width="2.6" fill="none"/>
-      <text x="${chartPad}" y="${
-    chartH - 10
-  }" fill="#6B7280" font-size="11" font-family="ui-sans-serif, system-ui">Last 30 days</text>
-      <text x="${
-        chartW - chartPad
-      }" y="18" text-anchor="end" fill="#6B7280" font-size="11" font-family="ui-sans-serif, system-ui">max ${max30}</text>
+      <text x="${chartPad}" y="${chartH - 10}" fill="${
+    theme.textDim
+  }" font-size="11" font-family="ui-sans-serif, system-ui">Last 30 days</text>
+      <text x="${chartW - chartPad}" y="18" text-anchor="end" fill="${
+    theme.textDim
+  }" font-size="11" font-family="ui-sans-serif, system-ui">max ${max30}</text>
     </g>
 
     <g transform="translate(0,134)">
-      <text x="0" y="0" fill="#E5E7EB" font-size="30" font-weight="800"
+      <text x="0" y="0" fill="${
+        theme.textStrong
+      }" font-size="30" font-weight="800"
             font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto">${total.toLocaleString(
               "en-US"
             )}</text>
 
-      <text x="104" y="0" fill="#9CA3AF" font-size="14" font-weight="600"
+      <text x="104" y="0" fill="${
+        theme.textMuted
+      }" font-size="14" font-weight="600"
             font-family="ui-sans-serif, system-ui">Total contributions</text>
 
-      <text x="0" y="30" fill="#6B7280" font-size="12" font-family="ui-sans-serif, system-ui">Last active</text>
-      <text x="74" y="30" fill="#E5E7EB" font-size="12" font-weight="650" font-family="ui-sans-serif, system-ui">${lastActiveText}</text>
+      <text x="0" y="30" fill="${
+        theme.textDim
+      }" font-size="12" font-family="ui-sans-serif, system-ui">Last active</text>
+      <text x="74" y="30" fill="${
+        theme.textStrong
+      }" font-size="12" font-weight="650" font-family="ui-sans-serif, system-ui">${lastActiveText}</text>
     </g>
   </g>
 
   <g>
-    <circle cx="${midCenterX}" cy="${
-    midCenterY - 10
-  }" r="${ringR}" stroke="#1F2937" stroke-width="${ringStroke}"/>
+    <circle cx="${midCenterX}" cy="${midCenterY - 10}" r="${ringR}" stroke="${
+    theme.divider
+  }" stroke-width="${ringStroke}"/>
     <circle cx="${midCenterX}" cy="${
     midCenterY - 10
   }" r="${ringR}" stroke="url(#accent)" stroke-width="${ringStroke}"
       stroke-linecap="round" stroke-dasharray="${dash}"
       transform="rotate(-90 ${midCenterX} ${midCenterY - 10})"/>
 
-    <text x="${midCenterX}" y="${
-    midCenterY + 6
-  }" text-anchor="middle" fill="#E5E7EB"
+    <text x="${midCenterX}" y="${midCenterY + 6}" text-anchor="middle" fill="${
+    theme.textStrong
+  }"
       font-size="40" font-weight="850" font-family="ui-sans-serif, system-ui">${current}</text>
 
-    <text x="${midCenterX}" y="${
-    midCenterY + 64
-  }" text-anchor="middle" fill="#9CA3AF"
+    <text x="${midCenterX}" y="${midCenterY + 64}" text-anchor="middle" fill="${
+    theme.textMuted
+  }"
       font-size="14" font-family="ui-sans-serif, system-ui">${streakTitle}</text>
 
-    <text x="${midCenterX}" y="${
-    midCenterY + 84
-  }" text-anchor="middle" fill="#6B7280"
+    <text x="${midCenterX}" y="${midCenterY + 84}" text-anchor="middle" fill="${
+    theme.textDim
+  }"
       font-size="12" font-family="ui-sans-serif, system-ui">${streakDesc}</text>
   </g>
 
@@ -295,11 +311,12 @@ function svgCard(input: {
     ${rows
       .map((row, idx) => {
         const y = idx * rowH;
-        const isStar = row.icon === "star";
         const p = iconPath(row.icon);
+        const isStar = row.icon === "star";
+
         const iconSvg = isStar
-          ? `<path d="${p}" fill="#22C55E" opacity="0.95"/>`
-          : `<path d="${p}" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>`;
+          ? `<path d="${p}" fill="${theme.listIcon}" opacity="0.95"/>`
+          : `<path d="${p}" stroke="${theme.listIcon}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>`;
 
         return `
         <g transform="translate(0,${y})">
@@ -308,8 +325,8 @@ function svgCard(input: {
               ${iconSvg}
             </svg>
           </g>
-          <text x="30" y="0" fill="#22C55E" font-size="14.5" font-weight="650" font-family="ui-sans-serif, system-ui">${row.label}</text>
-          <text x="186" y="0" fill="#86EFAC" font-size="14.5" font-weight="850" font-family="ui-sans-serif, system-ui">${row.value}</text>
+          <text x="30" y="0" fill="${theme.listLabel}" font-size="14.5" font-weight="650" font-family="ui-sans-serif, system-ui">${row.label}</text>
+          <text x="186" y="0" fill="${theme.listValue}" font-size="14.5" font-weight="850" font-family="ui-sans-serif, system-ui">${row.value}</text>
         </g>`;
       })
       .join("\n")}
@@ -321,6 +338,7 @@ export async function GET(req: Request) {
   try {
     const url = new URL(req.url);
     const user = (url.searchParams.get("user") || "").trim();
+    const theme = getTheme(url.searchParams.get("theme"));
     const token = process.env.GH_TOKEN;
 
     if (!token) return new Response("Missing GH_TOKEN", { status: 500 });
@@ -379,6 +397,7 @@ export async function GET(req: Request) {
     );
 
     const svg = svgCard({
+      theme,
       total,
       current,
       longest,

@@ -1,4 +1,4 @@
-import type { Theme } from "../../types/theme";
+import type { Theme } from "@/types/theme";
 import { midnightTheme } from "./midnight";
 import { sakuraTheme } from "./sakura";
 
@@ -13,4 +13,3 @@ export function getTheme(name: string | null | undefined): Theme {
 }
 
 export const themeNames = Object.keys(THEMES);
-export type { Theme };

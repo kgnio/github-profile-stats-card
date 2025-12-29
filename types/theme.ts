@@ -1,19 +1,46 @@
 export type Theme = {
   name: string;
-  bgStops: [string, string];
-  cardStroke: string;
-  divider: string;
-  panelBg: string;
-  panelStroke: string;
+  colors: {
+    bgStops: [string, string];
+    cardStroke: string;
+    divider: string;
+    panelBg: string;
+    panelStroke: string;
 
-  textStrong: string;
-  textMuted: string;
-  textDim: string;
+    textStrong: string;
+    textMuted: string;
+    textDim: string;
 
-  accentStops: [string, string, string];
-  chartFill: string;
+    accentStops: [string, string, string];
+    chartFill: string;
 
-  listLabel: string;
-  listValue: string;
-  listIcon: string;
+    listLabel: string;
+    listValue: string;
+    listIcon: string;
+  };
+  layout: {
+    radiusCard: number;
+    radiusPanel: number;
+
+    strokeCard: number;
+    strokeDivider: number;
+
+    ringR: number;
+    ringStroke: number;
+    ringYOffset: number;
+
+    chartPad: number;
+    chartStroke: number;
+    gridLines: number;
+
+    leftTopY: number;
+    metricsY: number;
+
+    listXPad: number;
+    listY: number;
+    listRowH: number;
+
+    totalFontSize: number;
+    totalLabelX: number;
+  };
 };

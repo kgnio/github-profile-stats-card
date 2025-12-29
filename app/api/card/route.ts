@@ -1,6 +1,7 @@
-export const runtime = "edge";
 import { getTheme } from "@/lib/themes";
-import type { Theme } from "@/lib/themes";
+import type { Theme } from "@/types/theme";
+
+export const runtime = "edge";
 
 type Day = { date: string; count: number };
 
@@ -73,7 +74,12 @@ function streakFromDailyCounts(daily: Day[]) {
   return { total, current, longest, lastActive };
 }
 
-function areaPath(values: number[], width: number, height: number, pad = 12) {
+function areaPath(
+  values: number[],
+  width: number,
+  height: number,
+  pad: number
+) {
   const max = Math.max(1, ...values);
   const w = width - pad * 2;
   const h = height - pad * 2;
@@ -141,48 +147,47 @@ function svgCard(input: {
   const W = 1080;
   const H = 260;
   const pad = 14;
-  const r = 20;
 
   const leftDivider = 430;
   const rightDivider = 750;
 
   const leftColX = 48;
-  const leftTopY = 58;
+  const leftTopY = theme.layout.leftTopY;
 
   const chartW = 340;
   const chartH = 96;
-  const chartPad = 12;
 
   const {
     lineD,
     areaD,
     max: max30,
-  } = areaPath(series30, chartW, chartH, chartPad);
+  } = areaPath(series30, chartW, chartH, theme.layout.chartPad);
 
-  const gridLines = 4;
-  const gridYs = Array.from(
-    { length: gridLines + 1 },
-    (_, i) => chartPad + ((chartH - chartPad * 2) * i) / gridLines
-  );
+  const gridYs = Array.from({ length: theme.layout.gridLines + 1 }, (_, i) => {
+    const y =
+      theme.layout.chartPad +
+      ((chartH - theme.layout.chartPad * 2) * i) / theme.layout.gridLines;
+    return y;
+  });
 
-  const ringR = 52;
-  const ringStroke = 10;
+  const ringR = theme.layout.ringR;
+  const ringStroke = theme.layout.ringStroke;
   const ringCirc = 2 * Math.PI * ringR;
   const denom = Math.max(1, longest, current);
   const ratio = clamp(current / denom, 0, 1);
   const dash = `${(ratio * ringCirc).toFixed(2)} ${ringCirc.toFixed(2)}`;
 
   const midCenterX = (leftDivider + rightDivider) / 2;
-  const midCenterY = 118;
+  const midCenterY = 118 + theme.layout.ringYOffset;
 
   const streakTitle = `${current}-day commit streak`;
   const streakDesc = `Coding consistently for ${current} days in a row.`;
 
   const lastActiveText = fmtISO(lastActive);
 
-  const listX = rightDivider + 28;
-  const listY = 66;
-  const rowH = 32;
+  const listX = rightDivider + theme.layout.listXPad;
+  const listY = theme.layout.listY;
+  const rowH = theme.layout.listRowH;
 
   const rows = [
     { icon: "star", label: "Total Stars:", value: compact(stars) },
@@ -197,19 +202,19 @@ function svgCard(input: {
      xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GitHub stats card">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="${W}" y2="${H}" gradientUnits="userSpaceOnUse">
-      <stop stop-color="${theme.bgStops[0]}"/>
-      <stop offset="1" stop-color="${theme.bgStops[1]}"/>
+      <stop stop-color="${theme.colors.bgStops[0]}"/>
+      <stop offset="1" stop-color="${theme.colors.bgStops[1]}"/>
     </linearGradient>
 
     <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
-      <stop stop-color="${theme.accentStops[0]}"/>
-      <stop offset="0.55" stop-color="${theme.accentStops[1]}"/>
-      <stop offset="1" stop-color="${theme.accentStops[2]}"/>
+      <stop stop-color="${theme.colors.accentStops[0]}"/>
+      <stop offset="0.55" stop-color="${theme.colors.accentStops[1]}"/>
+      <stop offset="1" stop-color="${theme.colors.accentStops[2]}"/>
     </linearGradient>
 
     <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
-      <stop stop-color="${theme.chartFill}" stop-opacity="0.22"/>
-      <stop offset="1" stop-color="${theme.chartFill}" stop-opacity="0"/>
+      <stop stop-color="${theme.colors.chartFill}" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="${theme.colors.chartFill}" stop-opacity="0"/>
     </linearGradient>
 
     <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
@@ -218,9 +223,10 @@ function svgCard(input: {
   </defs>
 
   <rect x="${pad}" y="${pad}" width="${W - pad * 2}" height="${H - pad * 2}"
-        rx="${r}" fill="url(#bg)" stroke="${
-    theme.cardStroke
-  }" filter="url(#softShadow)"/>
+        rx="${theme.layout.radiusCard}" fill="url(#bg)" stroke="${
+    theme.colors.cardStroke
+  }"
+        stroke-width="${theme.layout.strokeCard}" filter="url(#softShadow)"/>
 
   <path d="M${W - 360} ${pad} L${W - 140} ${pad} L${W - 40} ${H - pad} L${
     W - 260
@@ -229,80 +235,86 @@ function svgCard(input: {
 
   <line x1="${leftDivider}" y1="52" x2="${leftDivider}" y2="${
     H - 52
-  }" stroke="${theme.divider}"/>
+  }" stroke="${theme.colors.divider}" stroke-width="${
+    theme.layout.strokeDivider
+  }"/>
   <line x1="${rightDivider}" y1="52" x2="${rightDivider}" y2="${
     H - 52
-  }" stroke="${theme.divider}"/>
+  }" stroke="${theme.colors.divider}" stroke-width="${
+    theme.layout.strokeDivider
+  }"/>
 
   <g transform="translate(${leftColX},${leftTopY})">
     <g>
-      <rect x="0" y="0" width="${chartW}" height="${chartH}" rx="14" fill="${
-    theme.panelBg
-  }" stroke="${theme.panelStroke}"/>
+      <rect x="0" y="0" width="${chartW}" height="${chartH}" rx="${
+    theme.layout.radiusPanel
+  }" fill="${theme.colors.panelBg}" stroke="${theme.colors.panelStroke}"/>
       ${gridYs
         .map(
           (y) =>
-            `<line x1="${chartPad}" y1="${y.toFixed(2)}" x2="${(
-              chartW - chartPad
+            `<line x1="${theme.layout.chartPad}" y1="${y.toFixed(2)}" x2="${(
+              chartW - theme.layout.chartPad
             ).toFixed(2)}" y2="${y.toFixed(2)}" stroke="${
-              theme.panelStroke
+              theme.colors.panelStroke
             }" opacity="0.55"/>`
         )
         .join("\n")}
       <path d="${areaD}" fill="url(#chartFill)"/>
-      <path d="${lineD}" stroke="url(#accent)" stroke-width="2.6" fill="none"/>
-      <text x="${chartPad}" y="${chartH - 10}" fill="${
-    theme.textDim
+      <path d="${lineD}" stroke="url(#accent)" stroke-width="${
+    theme.layout.chartStroke
+  }" fill="none"/>
+      <text x="${theme.layout.chartPad}" y="${chartH - 10}" fill="${
+    theme.colors.textDim
   }" font-size="11" font-family="ui-sans-serif, system-ui">Last 30 days</text>
-      <text x="${chartW - chartPad}" y="18" text-anchor="end" fill="${
-    theme.textDim
+      <text x="${
+        chartW - theme.layout.chartPad
+      }" y="18" text-anchor="end" fill="${
+    theme.colors.textDim
   }" font-size="11" font-family="ui-sans-serif, system-ui">max ${max30}</text>
     </g>
 
-    <g transform="translate(0,134)">
-      <text x="0" y="0" fill="${
-        theme.textStrong
-      }" font-size="30" font-weight="800"
+    <g transform="translate(0,${theme.layout.metricsY})">
+      <text x="0" y="0" fill="${theme.colors.textStrong}" font-size="${
+    theme.layout.totalFontSize
+  }" font-weight="800"
             font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto">${total.toLocaleString(
               "en-US"
             )}</text>
 
-      <text x="104" y="0" fill="${
-        theme.textMuted
-      }" font-size="14" font-weight="600"
+      <text x="${theme.layout.totalLabelX}" y="0" fill="${
+    theme.colors.textMuted
+  }" font-size="14" font-weight="600"
             font-family="ui-sans-serif, system-ui">Total contributions</text>
 
       <text x="0" y="30" fill="${
-        theme.textDim
+        theme.colors.textDim
       }" font-size="12" font-family="ui-sans-serif, system-ui">Last active</text>
       <text x="74" y="30" fill="${
-        theme.textStrong
+        theme.colors.textStrong
       }" font-size="12" font-weight="650" font-family="ui-sans-serif, system-ui">${lastActiveText}</text>
     </g>
   </g>
 
   <g>
-    <circle cx="${midCenterX}" cy="${midCenterY - 10}" r="${ringR}" stroke="${
-    theme.divider
+    <circle cx="${midCenterX}" cy="${midCenterY}" r="${ringR}" stroke="${
+    theme.colors.divider
   }" stroke-width="${ringStroke}"/>
-    <circle cx="${midCenterX}" cy="${
-    midCenterY - 10
-  }" r="${ringR}" stroke="url(#accent)" stroke-width="${ringStroke}"
+    <circle cx="${midCenterX}" cy="${midCenterY}" r="${ringR}" stroke="url(#accent)" stroke-width="${ringStroke}"
       stroke-linecap="round" stroke-dasharray="${dash}"
-      transform="rotate(-90 ${midCenterX} ${midCenterY - 10})"/>
+      transform="rotate(-90 ${midCenterX} ${midCenterY})"/>
 
-    <text x="${midCenterX}" y="${midCenterY + 6}" text-anchor="middle" fill="${
-    theme.textStrong
+    <text x="${midCenterX}" y="${midCenterY + 16}" text-anchor="middle" fill="${
+    theme.colors.textStrong
   }"
       font-size="40" font-weight="850" font-family="ui-sans-serif, system-ui">${current}</text>
 
-    <text x="${midCenterX}" y="${midCenterY + 64}" text-anchor="middle" fill="${
-    theme.textMuted
+    <text x="${midCenterX}" y="${midCenterY + 74}" text-anchor="middle" fill="${
+    theme.colors.textMuted
   }"
       font-size="14" font-family="ui-sans-serif, system-ui">${streakTitle}</text>
 
-    <text x="${midCenterX}" y="${midCenterY + 84}" text-anchor="middle" fill="${
-    theme.textDim
+    <text x="${midCenterX}" y="${midCenterY + 94}" text-anchor="middle" fill="${
+    theme.colors.textDim
   }"
       font-size="12" font-family="ui-sans-serif, system-ui">${streakDesc}</text>
   </g>
@@ -315,8 +327,8 @@ function svgCard(input: {
         const isStar = row.icon === "star";
 
         const iconSvg = isStar
-          ? `<path d="${p}" fill="${theme.listIcon}" opacity="0.95"/>`
-          : `<path d="${p}" stroke="${theme.listIcon}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>`;
+          ? `<path d="${p}" fill="${theme.colors.listIcon}" opacity="0.95"/>`
+          : `<path d="${p}" stroke="${theme.colors.listIcon}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>`;
 
         return `
         <g transform="translate(0,${y})">
@@ -325,8 +337,8 @@ function svgCard(input: {
               ${iconSvg}
             </svg>
           </g>
-          <text x="30" y="0" fill="${theme.listLabel}" font-size="14.5" font-weight="650" font-family="ui-sans-serif, system-ui">${row.label}</text>
-          <text x="186" y="0" fill="${theme.listValue}" font-size="14.5" font-weight="850" font-family="ui-sans-serif, system-ui">${row.value}</text>
+          <text x="30" y="0" fill="${theme.colors.listLabel}" font-size="14.5" font-weight="650" font-family="ui-sans-serif, system-ui">${row.label}</text>
+          <text x="186" y="0" fill="${theme.colors.listValue}" font-size="14.5" font-weight="850" font-family="ui-sans-serif, system-ui">${row.value}</text>
         </g>`;
       })
       .join("\n")}

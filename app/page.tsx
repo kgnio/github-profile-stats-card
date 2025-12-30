@@ -12,6 +12,7 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+import { toast } from "sonner";
 
 const THEMES = [
   { key: "midnight", label: "Midnight" },
@@ -22,6 +23,7 @@ const THEMES = [
 type ThemeKey = (typeof THEMES)[number]["key"];
 
 export default function Home() {
+
   const base =
     process.env.NEXT_PUBLIC_BASE_URL ||
     (typeof window !== "undefined" ? window.location.origin : "");
@@ -36,10 +38,17 @@ export default function Home() {
 
   const md = `![GitHub Profile Stats](${activeUrl})`;
 
-  const copy = async (text: string) => {
+  const copy = async (text: string, label: string) => {
     try {
       await navigator.clipboard.writeText(text);
-    } catch {}
+      toast.success("Copied", {
+        description: label,
+      });
+    } catch {
+      toast.error("Copy failed", {
+        description: "Clipboard permission blocked.",
+      });
+    }
   };
 
   return (
@@ -119,7 +128,7 @@ export default function Home() {
                           : "hover:bg-muted",
                       ].join(" ")}
                     >
-                      {/* FIXED PREVIEW BOX (NO SHIFT) */}
+                      {/* PREVIEW BOX */}
                       <div className="h-[56px] w-[168px] shrink-0 overflow-hidden rounded-md border bg-background">
                         <div className="relative h-full w-full">
                           <img
@@ -198,7 +207,7 @@ export default function Home() {
                   <Button
                     size="sm"
                     variant="outline"
-                    onClick={() => copy(activeUrl)}
+                    onClick={() => copy(activeUrl, "Profile card URL copied")}
                   >
                     Copy URL
                   </Button>
@@ -218,7 +227,11 @@ export default function Home() {
                   <div className="text-xs text-muted-foreground">
                     README Markdown
                   </div>
-                  <Button size="sm" variant="outline" onClick={() => copy(md)}>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => copy(md, "README markdown copied")}
+                  >
                     Copy
                   </Button>
                 </div>

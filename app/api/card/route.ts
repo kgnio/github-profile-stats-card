@@ -84,8 +84,11 @@ function areaPath(
   const w = width - pad * 2;
   const h = height - pad * 2;
 
+  // guard against length <= 1
+  const denom = Math.max(1, values.length - 1);
+
   const pts = values.map((v, idx) => {
-    const x = pad + (w * idx) / (values.length - 1);
+    const x = pad + (w * idx) / denom;
     const y = pad + h - (h * v) / max;
     return [x, y] as const;
   });
@@ -144,50 +147,51 @@ function svgCard(input: {
     contributedTo,
   } = input;
 
-  const W = 1080;
-  const H = 260;
-  const pad = 14;
+  const L = theme.layout;
 
-  const leftDivider = 430;
-  const rightDivider = 750;
+  const W = L.cardW;
+  const H = L.cardH;
+  const pad = L.cardPad;
 
-  const leftColX = 48;
-  const leftTopY = theme.layout.leftTopY;
+  const leftDivider = L.leftDividerX;
+  const rightDivider = L.rightDividerX;
 
-  const chartW = 340;
-  const chartH = 96;
+  const leftColX = L.leftColX;
+  const leftTopY = L.leftTopY;
+
+  const chartW = L.chartW;
+  const chartH = L.chartH;
 
   const {
     lineD,
     areaD,
     max: max30,
-  } = areaPath(series30, chartW, chartH, theme.layout.chartPad);
+  } = areaPath(series30, chartW, chartH, L.chartPad);
 
-  const gridYs = Array.from({ length: theme.layout.gridLines + 1 }, (_, i) => {
+  const gridYs = Array.from({ length: L.gridLines + 1 }, (_, i) => {
     const y =
-      theme.layout.chartPad +
-      ((chartH - theme.layout.chartPad * 2) * i) / theme.layout.gridLines;
+      L.chartPad + ((chartH - L.chartPad * 2) * i) / Math.max(1, L.gridLines);
     return y;
   });
 
-  const ringR = theme.layout.ringR;
-  const ringStroke = theme.layout.ringStroke;
+  const ringR = L.ringR;
+  const ringStroke = L.ringStroke;
   const ringCirc = 2 * Math.PI * ringR;
   const denom = Math.max(1, longest, current);
   const ratio = clamp(current / denom, 0, 1);
   const dash = `${(ratio * ringCirc).toFixed(2)} ${ringCirc.toFixed(2)}`;
 
   const midCenterX = (leftDivider + rightDivider) / 2;
-  const midCenterY = 118 + theme.layout.ringYOffset;
+  const midCenterY = L.ringCenterY + L.ringYOffset;
 
   const streakTitle = `${current}-day commit streak`;
   const streakDesc = `Coding consistently for ${current} days in a row.`;
 
   const lastActiveText = fmtISO(lastActive);
 
-  const listX = rightDivider + theme.layout.listXPad;
-  const listY = theme.layout.listY;
-  const rowH = theme.layout.listRowH;
+  const listX = rightDivider + L.listXPad;
+  const listY = L.listY;
+  const rowH = L.listRowH;
 
   const rows = [
     { icon: "star", label: "Total Stars:", value: compact(stars) },
@@ -213,85 +217,105 @@ function svgCard(input: {
     </linearGradient>
 
     <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
-      <stop stop-color="${theme.colors.chartFill}" stop-opacity="0.22"/>
-      <stop offset="1" stop-color="${theme.colors.chartFill}" stop-opacity="0"/>
+      <stop stop-color="${theme.colors.chartFill}" stop-opacity="${
+    L.chartFillOpacityTop
+  }"/>
+      <stop offset="1" stop-color="${theme.colors.chartFill}" stop-opacity="${
+    L.chartFillOpacityBottom
+  }"/>
     </linearGradient>
 
     <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity="0.22"/>
+      <feDropShadow dx="${L.shadowDx}" dy="${L.shadowDy}" stdDeviation="${
+    L.shadowBlur
+  }"
+        flood-color="${theme.colors.shadowColor}" flood-opacity="${
+    L.shadowOpacity
+  }"/>
     </filter>
   </defs>
 
   <rect x="${pad}" y="${pad}" width="${W - pad * 2}" height="${H - pad * 2}"
-        rx="${theme.layout.radiusCard}" fill="url(#bg)" stroke="${
-    theme.colors.cardStroke
+        rx="${L.radiusCard}" fill="url(#bg)" stroke="${theme.colors.cardStroke}"
+        stroke-width="${L.strokeCard}" filter="url(#softShadow)"/>
+
+  <path d="M${W - L.accentShapeX1} ${pad} L${W - L.accentShapeX2} ${pad} L${
+    W - L.accentShapeX3
+  } ${H - pad} L${W - L.accentShapeX4} ${H - pad} Z"
+        fill="url(#accent)" opacity="${L.accentShapeOpacity}"/>
+
+  <line x1="${leftDivider}" y1="${L.dividerTopY}" x2="${leftDivider}" y2="${
+    H - L.dividerBottomY
   }"
-        stroke-width="${theme.layout.strokeCard}" filter="url(#softShadow)"/>
-
-  <path d="M${W - 360} ${pad} L${W - 140} ${pad} L${W - 40} ${H - pad} L${
-    W - 260
-  } ${H - pad} Z"
-        fill="url(#accent)" opacity="0.07"/>
-
-  <line x1="${leftDivider}" y1="52" x2="${leftDivider}" y2="${
-    H - 52
-  }" stroke="${theme.colors.divider}" stroke-width="${
-    theme.layout.strokeDivider
-  }"/>
-  <line x1="${rightDivider}" y1="52" x2="${rightDivider}" y2="${
-    H - 52
-  }" stroke="${theme.colors.divider}" stroke-width="${
-    theme.layout.strokeDivider
-  }"/>
+        stroke="${theme.colors.divider}" stroke-width="${L.strokeDivider}"/>
+  <line x1="${rightDivider}" y1="${L.dividerTopY}" x2="${rightDivider}" y2="${
+    H - L.dividerBottomY
+  }"
+        stroke="${theme.colors.divider}" stroke-width="${L.strokeDivider}"/>
 
   <g transform="translate(${leftColX},${leftTopY})">
     <g>
       <rect x="0" y="0" width="${chartW}" height="${chartH}" rx="${
-    theme.layout.radiusPanel
-  }" fill="${theme.colors.panelBg}" stroke="${theme.colors.panelStroke}"/>
+    L.radiusPanel
+  }"
+            fill="${theme.colors.panelBg}" stroke="${
+    theme.colors.panelStroke
+  }"/>
       ${gridYs
         .map(
           (y) =>
-            `<line x1="${theme.layout.chartPad}" y1="${y.toFixed(2)}" x2="${(
-              chartW - theme.layout.chartPad
+            `<line x1="${L.chartPad}" y1="${y.toFixed(2)}" x2="${(
+              chartW - L.chartPad
             ).toFixed(2)}" y2="${y.toFixed(2)}" stroke="${
               theme.colors.panelStroke
-            }" opacity="0.55"/>`
+            }" opacity="${L.gridOpacity}"/>`
         )
         .join("\n")}
       <path d="${areaD}" fill="url(#chartFill)"/>
       <path d="${lineD}" stroke="url(#accent)" stroke-width="${
-    theme.layout.chartStroke
+    L.chartStroke
   }" fill="none"/>
-      <text x="${theme.layout.chartPad}" y="${chartH - 10}" fill="${
+
+      <text x="${L.chartPad}" y="${chartH - L.chartLabelBottomPad}" fill="${
     theme.colors.textDim
-  }" font-size="11" font-family="ui-sans-serif, system-ui">Last 30 days</text>
-      <text x="${
-        chartW - theme.layout.chartPad
-      }" y="18" text-anchor="end" fill="${
-    theme.colors.textDim
-  }" font-size="11" font-family="ui-sans-serif, system-ui">max ${max30}</text>
+  }"
+            font-size="${L.chartLabelFontSize}" font-family="${L.fontFamily}">${
+    L.chartLabelLeftText
+  }</text>
+
+      <text x="${chartW - L.chartPad}" y="${
+    L.chartMaxLabelY
+  }" text-anchor="end" fill="${theme.colors.textDim}"
+            font-size="${L.chartLabelFontSize}" font-family="${L.fontFamily}">${
+    L.chartLabelRightPrefix
+  } ${max30}</text>
     </g>
 
-    <g transform="translate(0,${theme.layout.metricsY})">
+    <g transform="translate(0,${L.metricsY})">
       <text x="0" y="0" fill="${theme.colors.textStrong}" font-size="${
-    theme.layout.totalFontSize
-  }" font-weight="800"
-            font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto">${total.toLocaleString(
-              "en-US"
-            )}</text>
+    L.totalFontSize
+  }" font-weight="${L.totalFontWeight}"
+            font-family="${L.fontFamily}">${total.toLocaleString(
+    "en-US"
+  )}</text>
 
-      <text x="${theme.layout.totalLabelX}" y="0" fill="${
+      <text x="${L.totalLabelX}" y="0" fill="${
     theme.colors.textMuted
-  }" font-size="14" font-weight="600"
-            font-family="ui-sans-serif, system-ui">Total contributions</text>
+  }" font-size="${L.totalLabelFontSize}" font-weight="${L.totalLabelFontWeight}"
+            font-family="${L.fontFamily}">${L.totalLabelText}</text>
 
-      <text x="0" y="30" fill="${
-        theme.colors.textDim
-      }" font-size="12" font-family="ui-sans-serif, system-ui">Last active</text>
-      <text x="74" y="30" fill="${
-        theme.colors.textStrong
-      }" font-size="12" font-weight="650" font-family="ui-sans-serif, system-ui">${lastActiveText}</text>
+      <text x="0" y="${L.lastActiveRowY}" fill="${
+    theme.colors.textDim
+  }" font-size="${L.lastActiveLabelFontSize}"
+            font-family="${L.fontFamily}">${L.lastActiveLabelText}</text>
+
+      <text x="${L.lastActiveValueX}" y="${L.lastActiveRowY}" fill="${
+    theme.colors.textStrong
+  }"
+            font-size="${L.lastActiveValueFontSize}" font-weight="${
+    L.lastActiveValueFontWeight
+  }"
+            font-family="${L.fontFamily}">${lastActiveText}</text>
     </g>
   </g>
 
@@ -303,20 +327,26 @@ function svgCard(input: {
       stroke-linecap="round" stroke-dasharray="${dash}"
       transform="rotate(-90 ${midCenterX} ${midCenterY})"/>
 
-    <text x="${midCenterX}" y="${midCenterY + 16}" text-anchor="middle" fill="${
-    theme.colors.textStrong
-  }"
-      font-size="40" font-weight="850" font-family="ui-sans-serif, system-ui">${current}</text>
+    <text x="${midCenterX}" y="${
+    midCenterY + L.ringValueDy
+  }" text-anchor="middle" fill="${theme.colors.textStrong}"
+      font-size="${L.ringValueFontSize}" font-weight="${
+    L.ringValueFontWeight
+  }" font-family="${L.fontFamily}">${current}</text>
 
-    <text x="${midCenterX}" y="${midCenterY + 74}" text-anchor="middle" fill="${
-    theme.colors.textMuted
-  }"
-      font-size="14" font-family="ui-sans-serif, system-ui">${streakTitle}</text>
+    <text x="${midCenterX}" y="${
+    midCenterY + L.streakTitleDy
+  }" text-anchor="middle" fill="${theme.colors.textMuted}"
+      font-size="${L.streakTitleFontSize}" font-weight="${
+    L.streakTitleFontWeight
+  }" font-family="${L.fontFamily}">${streakTitle}</text>
 
-    <text x="${midCenterX}" y="${midCenterY + 94}" text-anchor="middle" fill="${
-    theme.colors.textDim
-  }"
-      font-size="12" font-family="ui-sans-serif, system-ui">${streakDesc}</text>
+    <text x="${midCenterX}" y="${
+    midCenterY + L.streakDescDy
+  }" text-anchor="middle" fill="${theme.colors.textDim}"
+      font-size="${L.streakDescFontSize}" font-weight="${
+    L.streakDescFontWeight
+  }" font-family="${L.fontFamily}">${streakDesc}</text>
   </g>
 
   <g transform="translate(${listX},${listY})">
@@ -327,18 +357,18 @@ function svgCard(input: {
         const isStar = row.icon === "star";
 
         const iconSvg = isStar
-          ? `<path d="${p}" fill="${theme.colors.listIcon}" opacity="0.95"/>`
-          : `<path d="${p}" stroke="${theme.colors.listIcon}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>`;
+          ? `<path d="${p}" fill="${theme.colors.listIcon}" opacity="${L.listIconOpacity}"/>`
+          : `<path d="${p}" stroke="${theme.colors.listIcon}" stroke-width="${L.listIconStroke}" stroke-linecap="round" stroke-linejoin="round" opacity="${L.listIconOpacity}"/>`;
 
         return `
         <g transform="translate(0,${y})">
-          <g transform="translate(0,-15)">
-            <svg x="0" y="0" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(0,${L.listIconDy})">
+            <svg x="0" y="0" width="${L.listIconBox}" height="${L.listIconBox}" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               ${iconSvg}
             </svg>
           </g>
-          <text x="30" y="0" fill="${theme.colors.listLabel}" font-size="14.5" font-weight="650" font-family="ui-sans-serif, system-ui">${row.label}</text>
-          <text x="186" y="0" fill="${theme.colors.listValue}" font-size="14.5" font-weight="850" font-family="ui-sans-serif, system-ui">${row.value}</text>
+          <text x="${L.listLabelX}" y="0" fill="${theme.colors.listLabel}" font-size="${L.listFontSize}" font-weight="${L.listLabelWeight}" font-family="${L.fontFamily}">${row.label}</text>
+          <text x="${L.listValueX}" y="0" fill="${theme.colors.listValue}" font-size="${L.listFontSize}" font-weight="${L.listValueWeight}" font-family="${L.fontFamily}">${row.value}</text>
         </g>`;
       })
       .join("\n")}
@@ -365,6 +395,7 @@ export async function GET(req: Request) {
             totalPullRequestContributions
             totalRepositoriesWithContributedCommits
             contributionCalendar {
+              totalContributions
               weeks {
                 contributionDays {
                   date
@@ -384,6 +415,7 @@ export async function GET(req: Request) {
 
     const weeks = data.user.contributionsCollection.contributionCalendar
       .weeks as any[];
+
     const daily: Day[] = weeks
       .flatMap((w) => w.contributionDays)
       .map((d: any) => ({ date: d.date, count: d.contributionCount }))
@@ -391,7 +423,9 @@ export async function GET(req: Request) {
 
     const { total, current, longest, lastActive } =
       streakFromDailyCounts(daily);
-    const series30 = daily.slice(-30).map((d) => d.count);
+
+    const series30Raw = daily.slice(-30).map((d) => d.count);
+    const series30 = Array.from({ length: 30 }, (_, i) => series30Raw[i] ?? 0);
 
     const commits =
       data.user.contributionsCollection.totalCommitContributions || 0;

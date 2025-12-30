@@ -3,45 +3,121 @@ import type { Theme } from "@/types/theme";
 export const cupcakeTheme: Theme = {
   name: "cupcake",
   colors: {
-    bgStops: ["#FDF2F8", "#EEF2FF"],
-    cardStroke: "#E5E7EB",
-    divider: "#E5E7EB",
+    bgStops: ["#FFF7FB", "#FFEAF6"],
+    cardStroke: "#F2B6D6",
+    divider: "#F2B6D6",
     panelBg: "#FFFFFF",
-    panelStroke: "#E5E7EB",
+    panelStroke: "#F2B6D6",
 
-    textStrong: "#0F172A",
-    textMuted: "#475569",
-    textDim: "#64748B",
+    textStrong: "#2B1B24",
+    textMuted: "#7A4E64",
+    textDim: "#9C6B83",
 
-    accentStops: ["#FDA4AF", "#F9A8D4", "#C4B5FD"],
-    chartFill: "#FDA4AF",
+    accentStops: ["#FB7185", "#A78BFA", "#F59E0B"],
+    chartFill: "#FB7185",
 
     listLabel: "#DB2777",
-    listValue: "#0F172A",
+    listValue: "#9D174D",
     listIcon: "#DB2777",
+
+    shadowColor: "#000000",
   },
+
   layout: {
-    radiusCard: 26,
-    radiusPanel: 18,
+    fontFamily:
+      "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto",
+
+    cardW: 1080,
+    cardH: 260,
+    cardPad: 14,
+
+    radiusCard: 20,
     strokeCard: 1,
+
+    shadowDx: 0,
+    shadowDy: 8,
+    shadowBlur: 12,
+    shadowOpacity: 0.18,
+
+    leftDividerX: 430,
+    rightDividerX: 750,
+    dividerTopY: 52,
+    dividerBottomY: 260 - 52,
     strokeDivider: 1,
 
-    ringR: 52,
-    ringStroke: 8,
-    ringYOffset: -10,
+    accentShapeX1: 1080 - 360,
+    accentShapeX2: 1080 - 140,
+    accentShapeX3: 1080 - 40,
+    accentShapeX4: 1080 - 260,
+    accentShapeOpacity: 0.06,
 
-    chartPad: 12,
-    chartStroke: 2.2,
-    gridLines: 3,
-
+    leftColX: 48,
     leftTopY: 58,
-    metricsY: 140,
 
-    listXPad: 28,
-    listY: 62,
-    listRowH: 34,
+    chartW: 340,
+    chartH: 96,
+    radiusPanel: 14,
+
+    chartPad: 14,
+    chartStroke: 2.6,
+
+    gridLines: 4,
+    gridOpacity: 0.55,
+
+    chartFillOpacityTop: 0.22,
+    chartFillOpacityBottom: 0,
+    chartLabelFontSize: 11,
+    chartLabelLeftText: "Last 30 days",
+    chartLabelRightPrefix: "max ",
+    chartLabelBottomPad: 1,
+    chartMaxLabelY: 18,
+
+    metricsY: 134,
 
     totalFontSize: 30,
+    totalFontWeight: 800,
     totalLabelX: 104,
+    totalLabelText: "Total contributions",
+    totalLabelFontSize: 14,
+    totalLabelFontWeight: 600,
+
+    lastActiveRowY: 30,
+    lastActiveLabelText: "Last active",
+    lastActiveLabelFontSize: 12,
+    lastActiveValueX: 74,
+    lastActiveValueFontSize: 12,
+    lastActiveValueFontWeight: 650,
+
+    ringCenterY: 118,
+    ringYOffset: -10,
+    ringR: 52,
+    ringStroke: 10,
+
+    ringValueDy: 16,
+    ringValueFontSize: 40,
+    ringValueFontWeight: 850,
+
+    streakTitleDy: 74,
+    streakTitleFontSize: 14,
+    streakTitleFontWeight: 400,
+
+    streakDescDy: 94,
+    streakDescFontSize: 12,
+    streakDescFontWeight: 400,
+
+    listXPad: 28,
+    listY: 66,
+    listRowH: 32,
+
+    listIconBox: 20,
+    listIconDy: -15,
+    listIconOpacity: 0.95,
+    listIconStroke: 2,
+
+    listLabelX: 30,
+    listValueX: 186,
+    listFontSize: 14.5,
+    listLabelWeight: 650,
+    listValueWeight: 850,
   },
 };

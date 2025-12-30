@@ -18,48 +18,47 @@ export type Theme = {
     listValue: string;
     listIcon: string;
 
-    // NEW: shadow rengi tema üzerinden
     shadowColor: string;
   };
 
   layout: {
-    // NEW: global
     fontFamily: string;
 
-    // NEW: card size/padding
     cardW: number;
     cardH: number;
     cardPad: number;
 
-    // Card frame
     radiusCard: number;
     strokeCard: number;
 
-    // NEW: shadow controls
     shadowDx: number;
     shadowDy: number;
     shadowBlur: number;
     shadowOpacity: number;
 
-    // Dividers
+    /* ───────── DIVIDER ───────── */
     leftDividerX: number;
     rightDividerX: number;
     dividerTopY: number;
     dividerBottomY: number;
     strokeDivider: number;
 
-    // NEW: accent shape geometry
+    dividerStyle: "solid" | "dashed" | "none";
+    dividerDash?: string;
+
+    /* ───────── ACCENT SHAPE ───────── */
+    accentShapeVariant: "diagonal" | "wave" | "blob" | "none";
     accentShapeX1: number;
     accentShapeX2: number;
     accentShapeX3: number;
     accentShapeX4: number;
     accentShapeOpacity: number;
 
-    // Left column anchors
+    /* ───────── LEFT COLUMN ───────── */
     leftColX: number;
     leftTopY: number;
 
-    // Chart panel
+    /* ───────── CHART ───────── */
     chartW: number;
     chartH: number;
     radiusPanel: number;
@@ -67,19 +66,27 @@ export type Theme = {
     chartPad: number;
     chartStroke: number;
 
+    chartVariant: "area" | "bars" | "dots" | "spark";
+    chartGrid: boolean;
+    chartLineDash?: string;
+
+    chartDotR?: number;
+    chartBarGap?: number;
+    chartBarRadius?: number;
+
     gridLines: number;
     gridOpacity: number;
 
-    // NEW: chart fill & labels
     chartFillOpacityTop: number;
     chartFillOpacityBottom: number;
+
     chartLabelFontSize: number;
     chartLabelLeftText: string;
     chartLabelRightPrefix: string;
     chartLabelBottomPad: number;
     chartMaxLabelY: number;
 
-    // Metrics (under chart)
+    /* ───────── METRICS ───────── */
     metricsY: number;
 
     totalFontSize: number;
@@ -96,7 +103,7 @@ export type Theme = {
     lastActiveValueFontSize: number;
     lastActiveValueFontWeight: number;
 
-    // Ring (middle)
+    /* ───────── RING ───────── */
     ringCenterY: number;
     ringYOffset: number;
     ringR: number;
@@ -114,7 +121,7 @@ export type Theme = {
     streakDescFontSize: number;
     streakDescFontWeight: number;
 
-    // Right list
+    /* ───────── LIST ───────── */
     listXPad: number;
     listY: number;
     listRowH: number;

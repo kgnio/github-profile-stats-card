@@ -2,92 +2,118 @@ import type { Theme } from "@/types/theme";
 
 export const iceTheme: Theme = {
   name: "ice",
+
   colors: {
-    bgStops: ["#06111D", "#071A2C"],
-    cardStroke: "#16324A",
-    divider: "#16324A",
-    panelBg: "#081726",
-    panelStroke: "#16324A",
+    // icy glass background
+    bgStops: ["#F6FBFF", "#EAF5FF"],
+    cardStroke: "#BFD7EA",
+    divider: "#BFD7EA",
+    panelBg: "#FFFFFF",
+    panelStroke: "#BFD7EA",
 
-    textStrong: "#E6F4FF",
-    textMuted: "#9CC7E6",
-    textDim: "#6FA7CC",
+    textStrong: "#0B1F33",
+    textMuted: "#3B637E",
+    textDim: "#6C8FA7",
 
-    accentStops: ["#38BDF8", "#22C55E", "#A78BFA"],
+    // cold accents (cyan → blue → lilac)
+    accentStops: ["#22D3EE", "#60A5FA", "#A5B4FC"],
     chartFill: "#38BDF8",
 
-    listLabel: "#38BDF8",
-    listValue: "#BAE6FD",
-    listIcon: "#38BDF8",
+    // right list (cool + readable)
+    listLabel: "#0EA5E9",
+    listValue: "#0B4A6E",
+    listIcon: "#0EA5E9",
 
     shadowColor: "#000000",
   },
 
   layout: {
+    /* ================= GLOBAL ================= */
     fontFamily:
-      "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto",
+      '"Inter","Plus Jakarta Sans","Segoe UI",ui-sans-serif,system-ui,-apple-system,Roboto',
 
     cardW: 1080,
     cardH: 260,
     cardPad: 14,
 
-    radiusCard: 20,
+    /* ================= FRAME ================= */
+    radiusCard: 22,
     strokeCard: 1,
 
     shadowDx: 0,
-    shadowDy: 8,
-    shadowBlur: 12,
-    shadowOpacity: 0.22,
+    shadowDy: 10,
+    shadowBlur: 18,
+    shadowOpacity: 0.12,
 
+    /* ================= DIVIDERS ================= */
     leftDividerX: 430,
     rightDividerX: 750,
     dividerTopY: 52,
-    dividerBottomY: 260 - 52,
+    dividerBottomY: 52,
     strokeDivider: 1,
 
-    accentShapeX1: 1080 - 360,
-    accentShapeX2: 1080 - 140,
-    accentShapeX3: 1080 - 40,
-    accentShapeX4: 1080 - 260,
-    accentShapeOpacity: 0.07,
+    dividerStyle: "dashed",
+    dividerDash: "2 8",
 
+    /* ================= ACCENT SHAPE ================= */
+    // ice: soft wave accent
+    accentShapeVariant: "wave",
+    accentShapeX1: 360,
+    accentShapeX2: 140,
+    accentShapeX3: 40,
+    accentShapeX4: 260,
+    accentShapeOpacity: 0.06,
+
+    /* ================= LEFT COLUMN ================= */
     leftColX: 48,
     leftTopY: 58,
 
+    /* ================= CHART ================= */
     chartW: 340,
     chartH: 96,
-    radiusPanel: 14,
+    radiusPanel: 16,
 
     chartPad: 14,
-    chartStroke: 2.6,
+    chartStroke: 2.4,
+
+    chartVariant: "dots",
+    chartGrid: true,
+    chartLineDash: undefined,
+
+    chartDotR: 3,
+    chartBarGap: 0,
+    chartBarRadius: 0,
 
     gridLines: 4,
-    gridOpacity: 0.55,
+    gridOpacity: 0.45,
 
-    chartFillOpacityTop: 0.22,
+    chartFillOpacityTop: 0.16,
     chartFillOpacityBottom: 0,
+
     chartLabelFontSize: 11,
     chartLabelLeftText: "Last 30 days",
-    chartLabelRightPrefix: "max ",
+    chartLabelRightPrefix: "max",
     chartLabelBottomPad: 1,
     chartMaxLabelY: 18,
 
+    /* ================= METRICS ================= */
     metricsY: 134,
 
     totalFontSize: 30,
-    totalFontWeight: 800,
+    totalFontWeight: 820,
     totalLabelX: 104,
     totalLabelText: "Total contributions",
     totalLabelFontSize: 14,
-    totalLabelFontWeight: 600,
+    totalLabelFontWeight: 650,
 
     lastActiveRowY: 30,
     lastActiveLabelText: "Last active",
     lastActiveLabelFontSize: 12,
     lastActiveValueX: 74,
     lastActiveValueFontSize: 12,
-    lastActiveValueFontWeight: 650,
+    lastActiveValueFontWeight: 700,
 
+    /* ================= RING ================= */
     ringCenterY: 118,
     ringYOffset: -10,
     ringR: 52,
@@ -95,23 +121,24 @@ export const iceTheme: Theme = {
 
     ringValueDy: 16,
     ringValueFontSize: 40,
-    ringValueFontWeight: 850,
+    ringValueFontWeight: 900,
 
-    streakTitleDy: 74,
+    streakTitleDy: 84,
     streakTitleFontSize: 14,
-    streakTitleFontWeight: 400,
+    streakTitleFontWeight: 450,
 
-    streakDescDy: 94,
+    streakDescDy: 104,
     streakDescFontSize: 12,
-    streakDescFontWeight: 400,
+    streakDescFontWeight: 420,
 
+    /* ================= RIGHT LIST ================= */
     listXPad: 28,
     listY: 66,
     listRowH: 32,
 
     listIconBox: 20,
     listIconDy: -15,
-    listIconOpacity: 0.95,
+    listIconOpacity: 0.9,
     listIconStroke: 2,
 
     listLabelX: 30,

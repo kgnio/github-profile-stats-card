@@ -1,10 +1,12 @@
 import type { Theme } from "@/types/theme";
 import { midnightTheme } from "./midnight";
-import { sakuraTheme } from "./sakura";
+import { cupcakeTheme } from "./cupcake";
+import { iceTheme } from "./ice";
 
 const THEMES: Record<string, Theme> = {
   midnight: midnightTheme,
-  sakura: sakuraTheme,
+  cupcake: cupcakeTheme,
+  ice: iceTheme,
 };
 
 export function getTheme(name: string | null | undefined): Theme {

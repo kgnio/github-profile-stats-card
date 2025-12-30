@@ -1,24 +1,24 @@
 import type { Theme } from "@/types/theme";
 
-export const sakuraTheme: Theme = {
-  name: "sakura",
+export const cupcakeTheme: Theme = {
+  name: "cupcake",
   colors: {
-    bgStops: ["#2A1623", "#1A2142"],
-    cardStroke: "#5A3A55",
-    divider: "#5A3A55",
-    panelBg: "#2B1726",
-    panelStroke: "#5A3A55",
+    bgStops: ["#FDF2F8", "#EEF2FF"],
+    cardStroke: "#E5E7EB",
+    divider: "#E5E7EB",
+    panelBg: "#FFFFFF",
+    panelStroke: "#E5E7EB",
 
-    textStrong: "#FFF7FB",
-    textMuted: "#F3C6DD",
-    textDim: "#C79AB5",
+    textStrong: "#0F172A",
+    textMuted: "#475569",
+    textDim: "#64748B",
 
     accentStops: ["#FDA4AF", "#F9A8D4", "#C4B5FD"],
     chartFill: "#FDA4AF",
 
-    listLabel: "#F9A8D4",
-    listValue: "#FCE7F3",
-    listIcon: "#F9A8D4",
+    listLabel: "#DB2777",
+    listValue: "#0F172A",
+    listIcon: "#DB2777",
   },
   layout: {
     radiusCard: 26,

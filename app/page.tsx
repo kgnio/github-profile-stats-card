@@ -1,48 +1,346 @@
+"use client";
+
+import * as React from "react";
+
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+
+const THEMES = [
+  { key: "midnight", label: "Midnight" },
+  { key: "cupcake", label: "Cupcake" },
+  { key: "ice", label: "Ice" },
+] as const;
+
+type ThemeKey = (typeof THEMES)[number]["key"];
+
 export default function Home() {
-  const base = process.env.NEXT_PUBLIC_BASE_URL;
+  const base =
+    process.env.NEXT_PUBLIC_BASE_URL ||
+    (typeof window !== "undefined" ? window.location.origin : "");
 
-  const u = "kgnio";
+  const [user, setUser] = React.useState("kgnio");
+  const [theme, setTheme] = React.useState<ThemeKey>("midnight");
 
-  const examples = [
-    `${base}/api/card?user=${u}`,
-    `${base}/api/card?user=${u}&theme=midnight`,
-    `${base}/api/card?user=${u}&theme=slate`,
-    `${base}/api/card?user=${u}&theme=light`,
-  ];
+  const activeUrl = React.useMemo(() => {
+    const u = user.trim() || "kgnio";
+    return `${base}/api/card?user=${encodeURIComponent(u)}&theme=${theme}`;
+  }, [base, user, theme]);
+
+  const md = `![GitHub Profile Stats](${activeUrl})`;
+
+  const copy = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {}
+  };
 
   return (
-    <main style={{ padding: 24, fontFamily: "ui-sans-serif, system-ui" }}>
-      <h1 style={{ fontSize: 28, fontWeight: 800 }}>
-        GitHub Profile Stats Card
-      </h1>
-      <p style={{ color: "#6B7280", marginTop: 8 }}>
-        Hosted SVG stats card for any GitHub username.
-      </p>
+    <main className="min-h-screen bg-background text-foreground">
+      <div className="mx-auto max-w-6xl px-6 py-12">
+        {/* HEADER */}
+        <header className="mb-10 space-y-3">
+          <div className="inline-flex items-center gap-2 rounded-full border bg-card px-3 py-1 text-xs text-muted-foreground">
+            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+            GitHub SVG generator
+          </div>
 
-      <div style={{ marginTop: 18, display: "grid", gap: 14, maxWidth: 1100 }}>
-        <img
-          src={`${base}/api/card?user=${u}`}
-          alt="Preview"
-          style={{
-            width: "100%",
-            borderRadius: 14,
-            border: "1px solid #1F2937",
-          }}
-        />
+          <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
+            GitHub Profile Stats Card
+          </h1>
 
-        <h2 style={{ fontSize: 18, fontWeight: 800, marginTop: 8 }}>
-          Examples
-        </h2>
+          <p className="max-w-2xl text-sm text-muted-foreground">
+            Pick a theme, preview the SVG, then copy the URL or README markdown.
+          </p>
+        </header>
 
-        <ul style={{ display: "grid", gap: 10, margin: 0, paddingLeft: 18 }}>
-          {examples.map((x) => (
-            <li key={x}>
-              <a href={x} target="_blank" rel="noreferrer">
-                {x}
-              </a>
-            </li>
-          ))}
-        </ul>
+        {/* GRID */}
+        <section className="grid gap-6 lg:grid-cols-2">
+          {/* LEFT PANEL */}
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <div>
+                <div className="text-sm font-medium">Preview</div>
+                <div className="text-xs text-muted-foreground">
+                  Live SVG output
+                </div>
+              </div>
+
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => window.open(activeUrl, "_blank")}
+              >
+                Open SVG
+              </Button>
+            </CardHeader>
+
+            <CardContent className="space-y-6">
+              {/* ACTIVE SVG */}
+              <div className="w-full rounded-lg border bg-muted p-2">
+                <div
+                  className="relative w-full overflow-hidden rounded-md bg-background"
+                  style={{ aspectRatio: "3 / 1" }}
+                >
+                  <img
+                    src={activeUrl}
+                    alt="Active SVG preview"
+                    className="absolute inset-0 h-full w-full object-contain"
+                    draggable={false}
+                  />
+                </div>
+              </div>
+
+              {/* THEME LIST */}
+              <div className="space-y-3">
+                {THEMES.map((t) => {
+                  const active = t.key === theme;
+                  const u = user.trim() || "kgnio";
+                  const previewUrl = `${base}/api/card?user=${encodeURIComponent(
+                    u
+                  )}&theme=${t.key}`;
+
+                  return (
+                    <button
+                      key={t.key}
+                      type="button"
+                      onClick={() => setTheme(t.key)}
+                      className={[
+                        "flex w-full items-center gap-4 rounded-lg border p-3 text-left transition",
+                        active
+                          ? "border-primary bg-primary/5"
+                          : "hover:bg-muted",
+                      ].join(" ")}
+                    >
+                      {/* FIXED PREVIEW BOX (NO SHIFT) */}
+                      <div className="h-[56px] w-[168px] shrink-0 overflow-hidden rounded-md border bg-background">
+                        <div className="relative h-full w-full">
+                          <img
+                            src={previewUrl}
+                            alt={`${t.label} preview`}
+                            className="absolute inset-0 h-full w-full object-contain"
+                            draggable={false}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="min-w-0">
+                        <div className="text-sm font-medium truncate">
+                          {t.label}
+                        </div>
+                        <div className="text-xs text-muted-foreground truncate">
+                          theme={t.key}
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* RIGHT PANEL */}
+          <Card>
+            <CardHeader>
+              <div className="text-sm font-medium">Generate</div>
+              <div className="text-xs text-muted-foreground">
+                Customize and copy
+              </div>
+            </CardHeader>
+
+            <CardContent className="space-y-6">
+              {/* USER INPUT */}
+              <div className="space-y-2">
+                <label className="text-xs text-muted-foreground">
+                  GitHub username
+                </label>
+                <Input
+                  value={user}
+                  onChange={(e) => setUser(e.target.value)}
+                  placeholder="kgnio"
+                />
+              </div>
+
+              {/* THEME SELECT */}
+              <div className="space-y-2">
+                <label className="text-xs text-muted-foreground">Theme</label>
+                <Select
+                  value={theme}
+                  onValueChange={(v) => setTheme(v as ThemeKey)}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {THEMES.map((t) => (
+                      <SelectItem key={t.key} value={t.key}>
+                        {t.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* URL */}
+              <div className="space-y-2">
+                <div className="text-xs text-muted-foreground">URL</div>
+                <div className="rounded-md border bg-muted p-2 text-xs font-mono break-words">
+                  {activeUrl}
+                </div>
+                <div className="flex gap-2">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => copy(activeUrl)}
+                  >
+                    Copy URL
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => window.open(activeUrl, "_blank")}
+                  >
+                    Open
+                  </Button>
+                </div>
+              </div>
+
+              {/* MARKDOWN */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="text-xs text-muted-foreground">
+                    README Markdown
+                  </div>
+                  <Button size="sm" variant="outline" onClick={() => copy(md)}>
+                    Copy
+                  </Button>
+                </div>
+                <pre className="rounded-md border bg-muted p-2 text-xs font-mono whitespace-pre-wrap break-words">
+                  {md}
+                </pre>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* HOW TO USE */}
+          <Card className="lg:col-span-2">
+            <CardHeader>
+              <div className="text-sm font-medium">How to use</div>
+              <div className="text-xs text-muted-foreground">
+                Use my hosted endpoint in your profile README, or run it in your
+                own repo with GitHub Actions.
+              </div>
+            </CardHeader>
+
+            <CardContent className="grid gap-6 lg:grid-cols-2">
+              {/* OPTION A: USE MY DEPLOY */}
+              <div className="space-y-3">
+                <div className="text-xs font-medium">
+                  Option A — Use my hosted SVG (recommended)
+                </div>
+
+                <ol className="list-decimal space-y-2 pl-4 text-xs text-muted-foreground">
+                  <li>
+                    Create a new repository on GitHub named exactly{" "}
+                    <span className="font-mono text-foreground">
+                      &lt;your-username&gt;
+                    </span>{" "}
+                    (same as your GitHub username).
+                  </li>
+                  <li>
+                    Add a{" "}
+                    <span className="font-mono text-foreground">README.md</span>{" "}
+                    file (GitHub will show it on your profile automatically).
+                  </li>
+                  <li>
+                    Pick your username + theme here, then copy the Markdown
+                    below.
+                  </li>
+                  <li>Paste it into your profile README and commit.</li>
+                </ol>
+
+                <div className="text-xs text-muted-foreground">
+                  Embed example
+                </div>
+                <pre className="rounded-md border bg-muted p-3 text-xs font-mono whitespace-pre-wrap break-words">
+                  {`![GitHub Profile Stats](${base}/api/card?user=<username>&theme=<theme>)`}
+                </pre>
+
+                <div className="text-[11px] text-muted-foreground">
+                  Tip: replace{" "}
+                  <span className="font-mono text-foreground">
+                    &lt;username&gt;
+                  </span>{" "}
+                  with your GitHub username and{" "}
+                  <span className="font-mono text-foreground">
+                    &lt;theme&gt;
+                  </span>{" "}
+                  with one of the themes.
+                </div>
+              </div>
+
+              {/* OPTION B: RUN IN YOUR OWN REPO (ACTIONS) */}
+              <div className="space-y-3">
+                <div className="text-xs font-medium">
+                  Option B — Run it in your own repo (GitHub Actions)
+                </div>
+
+                <ol className="list-decimal space-y-2 pl-4 text-xs text-muted-foreground">
+                  <li>
+                    Fork / clone this repo (the generator project) into your
+                    GitHub account.
+                  </li>
+                  <li>
+                    Enable GitHub Actions (repo → Actions tab → enable if
+                    needed).
+                  </li>
+                  <li>
+                    Add your username and theme as repo variables (Settings →
+                    Secrets and variables → Actions):
+                    <div className="mt-1 grid gap-1">
+                      <span className="font-mono text-foreground">
+                        CARD_USERNAME
+                      </span>
+                      <span className="font-mono text-foreground">
+                        CARD_THEME
+                      </span>
+                    </div>
+                  </li>
+                  <li>
+                    Run the workflow “Generate Card” (or push to main) — it will
+                    generate an SVG and commit it into your repo (for example:{" "}
+                    <span className="font-mono text-foreground">
+                      /public/card.svg
+                    </span>{" "}
+                    or{" "}
+                    <span className="font-mono text-foreground">/card.svg</span>
+                    ).
+                  </li>
+                  <li>Reference that generated SVG in your profile README.</li>
+                </ol>
+
+                <div className="text-xs text-muted-foreground">
+                  Example embed (from your own repo)
+                </div>
+                <pre className="rounded-md border bg-muted p-3 text-xs font-mono whitespace-pre-wrap break-words">
+                  {`![GitHub Profile Stats](https://raw.githubusercontent.com/<your-username>/<your-repo>/main/card.svg)`}
+                </pre>
+
+                <div className="text-[11px] text-muted-foreground">
+                  Note: the exact SVG path depends on where your workflow saves
+                  it. Use the raw GitHub URL of the generated SVG file.
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </section>
       </div>
     </main>
   );

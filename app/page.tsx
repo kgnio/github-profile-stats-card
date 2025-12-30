@@ -294,16 +294,25 @@ export default function Home() {
 
                 <ol className="list-decimal space-y-2 pl-4 text-xs text-muted-foreground">
                   <li>
-                    Fork / clone this repo (the generator project) into your
-                    GitHub account.
+                    Fork / clone this repository into your GitHub account.
                   </li>
+
                   <li>
-                    Enable GitHub Actions (repo → Actions tab → enable if
-                    needed).
+                    Create a GitHub Personal Access Token (PAT) and save it as a
+                    repository secret:
+                    <div className="mt-1 text-[11px] leading-relaxed">
+                      <span className="font-mono text-foreground">
+                        Settings → Secrets and variables → Actions → Secrets
+                      </span>{" "}
+                      → add{" "}
+                      <span className="font-mono text-foreground">
+                        GH_TOKEN
+                      </span>
+                    </div>
                   </li>
+
                   <li>
-                    Add your username and theme as repo variables (Settings →
-                    Secrets and variables → Actions):
+                    Add repository variables (used by the workflow):
                     <div className="mt-1 grid gap-1">
                       <span className="font-mono text-foreground">
                         CARD_USERNAME
@@ -312,30 +321,53 @@ export default function Home() {
                         CARD_THEME
                       </span>
                     </div>
+                    <div className="mt-1 text-[11px] leading-relaxed">
+                      <span className="font-mono text-foreground">
+                        Settings → Secrets and variables → Actions → Variables
+                      </span>
+                    </div>
                   </li>
+
                   <li>
-                    Run the workflow “Generate Card” (or push to main) — it will
-                    generate an SVG and commit it into your repo (for example:{" "}
-                    <span className="font-mono text-foreground">
-                      /public/card.svg
-                    </span>{" "}
-                    or{" "}
-                    <span className="font-mono text-foreground">/card.svg</span>
-                    ).
+                    Run the workflow:
+                    <div className="mt-1 text-[11px] leading-relaxed">
+                      <span className="font-mono text-foreground">
+                        Actions → Generate Profile Card → Run workflow
+                      </span>
+                    </div>
                   </li>
-                  <li>Reference that generated SVG in your profile README.</li>
+
+                  <li>
+                    The workflow uses{" "}
+                    <span className="font-mono text-foreground">
+                      scripts/generate-card.ts
+                    </span>{" "}
+                    and commits the generated SVG into your repo as{" "}
+                    <span className="font-mono text-foreground">
+                      public/card.svg
+                    </span>
+                    .
+                  </li>
+
+                  <li>
+                    Embed that committed file in your profile README using the
+                    raw GitHub URL.
+                  </li>
                 </ol>
 
                 <div className="text-xs text-muted-foreground">
                   Example embed (from your own repo)
                 </div>
                 <pre className="rounded-md border bg-muted p-3 text-xs font-mono whitespace-pre-wrap break-words">
-                  {`![GitHub Profile Stats](https://raw.githubusercontent.com/<your-username>/<your-repo>/main/card.svg)`}
+                  {`![GitHub Profile Stats](https://raw.githubusercontent.com/<your-username>/<your-repo>/main/public/card.svg)`}
                 </pre>
 
                 <div className="text-[11px] text-muted-foreground">
-                  Note: the exact SVG path depends on where your workflow saves
-                  it. Use the raw GitHub URL of the generated SVG file.
+                  Tip: After the first workflow run, open{" "}
+                  <span className="font-mono text-foreground">
+                    public/card.svg
+                  </span>{" "}
+                  on GitHub and use its “Raw” URL.
                 </div>
               </div>
             </CardContent>

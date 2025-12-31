@@ -475,12 +475,12 @@ function svgCard(input: {
 /* ===================== MAIN ===================== */
 
 async function main() {
-  const token = process.env.GH_TOKEN;
+  const token = process.env.PROFILE_REPO_TOKEN;
   const username = (process.env.CARD_USERNAME || "").trim();
   const themeKey = (process.env.CARD_THEME || "").trim();
   const out = (process.env.CARD_OUTPUT || "card.svg").trim();
 
-  if (!token) throw new Error("Missing GH_TOKEN env var.");
+  if (!token) throw new Error("Missing PROFILE_REPO_TOKEN env var.");
   if (!username) throw new Error("Missing CARD_USERNAME env var.");
 
   const theme = getTheme(themeKey);

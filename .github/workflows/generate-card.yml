@@ -12,7 +12,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout (stats-card repo)
         uses: actions/checkout@v4
 
       - name: Setup Node
@@ -24,21 +24,15 @@ jobs:
       - name: Install
         run: npm ci
 
-      - name: Generate SVG
+      - name: Generate SVG (use PAT)
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          PROFILE_REPO_TOKEN: ${{ secrets.PROFILE_REPO_TOKEN }}
           CARD_USERNAME: ${{ vars.CARD_USERNAME }}
           CARD_THEME: ${{ vars.CARD_THEME }}
           CARD_OUTPUT: public/card.svg
-        run: |
-          # Fallback to the repo-scoped token if GH_TOKEN secret is not provided
-          if [ -z "$GH_TOKEN" ]; then
-            export GH_TOKEN="${{ github.token }}"
-          fi
+        run: npm run generate:card
 
-          npm run generate:card
-
-      - name: Commit & Push (if changed)
+      - name: Commit & Push card.svg (if changed)
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -78,7 +72,6 @@ jobs:
           TS="$(date +%s)"
           BASE="https://raw.githubusercontent.com/${USERNAME}/github-profile-stats-card/main/public/card.svg"
 
-          # Update existing ?v=... or add it, or prepend if missing
           if grep -q "${BASE}\?v=" "$FILE"; then
             perl -0777 -i -pe "s#\Q${BASE}?v=\E\d+#${BASE}?v=${TS}#g" "$FILE"
             echo "Updated existing v=..."

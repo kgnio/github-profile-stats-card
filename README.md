@@ -97,89 +97,147 @@ Your profile will now display the card.
 
 # Option B — Run it in your own repo (GitHub Actions)
 
-Use this option if you want:
+This option is for people who want the SVG to be generated **inside their own GitHub repo** and then embedded from a **raw GitHub URL**.
 
-- Full control over updates
-- A generated SVG file in your own repository
-- Scheduled updates via GitHub Actions
+✅ You will end up with:
 
----
-
-## How it works
-
-- You fork or clone this repository
-- A GitHub Actions workflow generates an SVG file (for example: `card.svg`)
-- The SVG is committed to your repository
-- You embed that SVG in your README using a raw GitHub URL
-
----
-
-## Step-by-step
-
-1. Fork or clone this repository into your GitHub account
-
-2. Enable GitHub Actions  
-   Repository → **Actions** → enable if prompted
-
-3. Create a GitHub Personal Access Token (PAT) and save it as a repository secret
-
-   - Create a token (PAT) on GitHub
-   - Repository → **Settings → Secrets and variables → Actions → Secrets**
-   - Add a new secret named: `GH_TOKEN`
-
-4. Add repository variables  
-   Repository → **Settings → Secrets and variables → Actions → Variables**
-
-Add the following variables:
-
-- `CARD_USERNAME` → your GitHub username
-- `CARD_THEME` → one of the available themes
-
-5. Run the workflow  
-   Actions → Generate Profile Card → Run workflow
-
-6. The workflow will generate and commit this file:
-
-public/card.svg
-
-7. Embed it in your README:
+- A generated file at: `public/card.svg`
+- A workflow that can run manually or on schedule
+- A README embed line like:
 
 ```md
-![GitHub Profile Stats](https://raw.githubusercontent.com/<YOUR_USERNAME>/<YOUR_REPO>/main/public/card.svg)
+![GitHub Profile Card](https://raw.githubusercontent.com/<username>/github-profile-stats-card/main/public/card.svg)
 ```
 
 ---
 
-## Which option should I choose?
+## Step 1 — Fork (or clone) the repository to your account
 
-| Option                 | When to use                        |
-| ---------------------- | ---------------------------------- |
-| **Option A — Hosted**  | Fastest, zero setup, recommended   |
-| **Option B — Actions** | Maximum control, scheduled updates |
+### Option 1 (recommended): Fork on GitHub (easiest)
 
----
+1. Open this repository on GitHub.
+2. Click **Fork** (top-right).
+3. Choose your account.
+4. Keep the repository name as: **github-profile-stats-card**
+5. Click **Create fork**.
 
-## Where can I see the cards?
+Now you have your own copy at:
 
-- Live demo & theme previews  
-  https://kgnio-profile-card.vercel.app/
-
-- SVG endpoint format
-
-```
-/api/card?user=<username>&theme=<theme>
-```
+- `https://github.com/<username>/github-profile-stats-card`
 
 ---
 
-## Notes on caching
+## Step 2 — Enable GitHub Actions (if it asks)
 
-GitHub may cache images aggressively.
+1. Go to your forked repo.
+2. Click the **Actions** tab.
+3. If you see a message like “Workflows are disabled”, click **Enable workflows**.
 
-If you change themes or usernames and don’t see updates immediately:
+---
 
-- Wait a few minutes
-- Or append a dummy query parameter like `&v=1`
+## Step 3 — Create a GitHub Token (PAT)
+
+1. Go to your GitHub **Settings**
+2. **Developer settings** → **Personal access tokens**
+3. Choose **Tokens (classic)**
+4. Click **Generate new token (classic)**
+
+Fill it like this:
+
+- **Note:** `profile card generator`
+- **Expiration:** 30–90 days
+- **Scopes:**
+  - ✅ `read:user`
+  - ✅ `repo` (safe choice for committing SVG)
+
+5. Click **Generate token**
+6. Copy the token immediately.
+
+---
+
+## Step 4 — Add the token to your repo Secrets
+
+1. Repo → **Settings**
+2. **Secrets and variables** → **Actions**
+3. **Secrets** tab → **New repository secret**
+4. Add:
+
+- **Name:** `GH_TOKEN`
+- **Secret:** _(paste token)_
+
+---
+
+## Step 5 — Add username & theme as repo Variables
+
+Repo → **Settings → Secrets and variables → Actions → Variables**
+
+Add:
+
+- `CARD_USERNAME` → your GitHub username
+- `CARD_THEME` → `midnight` | `cupcake` | `ice`
+
+(Optional)
+
+- `CARD_OUTPUT` → `public/card.svg`
+
+---
+
+## Step 6 — Run the workflow manually
+
+1. **Actions**
+2. **Generate Profile Card**
+3. **Run workflow**
+
+Wait until it finishes.
+
+---
+
+## Step 7 — Verify output
+
+Check:
+
+```
+public/card.svg
+```
+
+---
+
+## Step 8 — Embed in your profile README
+
+```md
+![GitHub Profile Card](https://raw.githubusercontent.com/<username>/github-profile-stats-card/main/public/card.svg)
+```
+
+---
+
+## Cache issues
+
+Append a version query if needed:
+
+```md
+![GitHub Profile Card](https://raw.githubusercontent.com/<username>/github-profile-stats-card/main/public/card.svg?v=1)
+```
+
+---
+
+## Common issues
+
+### Missing CARD_USERNAME
+
+- Ensure it exists under **Variables**, not Secrets
+
+### Missing lock file
+
+- Run `npm install`
+- Commit `package-lock.json`
+
+### SVG not updating
+
+- Check workflow permissions:
+  ```yml
+  permissions:
+    contents: write
+  ```
 
 ---
 

@@ -43,7 +43,7 @@ You can preview all themes here:
 
 ### Midnight
 
-![Midnight](https://kgnio-profile-card.vercel.app/themes/midnight.png)
+![Midnight](https://kgnio-profile-card.vercel.app/api/card?user=kgnio&theme=midnight)
 
 ### Cupcake
 

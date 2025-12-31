@@ -89,7 +89,7 @@ export const cupcakeTheme: Theme = {
     chartLabelFontSize: 11,
     chartLabelLeftText: "Last 30 days",
     chartLabelRightPrefix: "max",
-    chartLabelBottomPad: 1,
+    chartLabelBottomPad: 3,
     chartMaxLabelY: 18,
 
     /* ================= METRICS ================= */

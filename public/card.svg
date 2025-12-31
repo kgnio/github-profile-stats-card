@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1080" height="260" viewBox="0 0 1080 260" fill="none"
+  xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GitHub stats card">
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1080" y2="260" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF8FC"/>
+      <stop offset="1" stop-color="#FFEFF8"/>
+    </linearGradient>
+
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FDA4AF"/><stop offset="0.5" stop-color="#C4B5FD"/><stop offset="1" stop-color="#FCD34D"/>
+    </linearGradient>
+
+    <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#FDA4AF" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#FDA4AF" stop-opacity="0"/>
+    </linearGradient>
+
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10"
+        stdDeviation="16"
+        flood-color="#000000"
+        flood-opacity="0.1" />
+    </filter>
+
+    <style>
+      text { font-family: "Trebuchet MS","Verdana","Segoe UI",system-ui,-apple-system,Roboto; dominant-baseline: alphabetic; }
+    </style>
+  </defs>
+
+  <rect x="14" y="14" width="1052" height="232"
+    rx="28" fill="url(#bg)"
+    stroke="#F4C7DD"
+    stroke-width="1"
+    filter="url(#shadow)" />
+
+  <path d="M720 14
+    L940 14
+    L1040 246
+    L820 246 Z"
+    fill="url(#accent)" opacity="0.04" />
+  <line x1="430" y1="52" x2="430" y2="208"
+    stroke="#F4C7DD"
+    stroke-width="1"
+    stroke-dasharray="3 7" />
+  <line x1="750" y1="52" x2="750" y2="208"
+    stroke="#F4C7DD"
+    stroke-width="1"
+    stroke-dasharray="3 7" />
+
+  <!-- LEFT: CHART + METRICS -->
+  <g transform="translate(48,58)">
+    <rect x="0" y="0" width="340" height="96"
+      rx="18"
+      fill="#FFFFFF"
+      stroke="#F4C7DD" />
+
+    
+
+    <rect x="14.00" y="52.53"
+          width="6.53" height="29.47"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="24.53" y="72.93"
+          width="6.53" height="9.07"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="35.07" y="27.60"
+          width="6.53" height="54.40"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="45.60" y="48.00"
+          width="6.53" height="34.00"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="56.13" y="72.93"
+          width="6.53" height="9.07"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="66.67" y="72.93"
+          width="6.53" height="9.07"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="77.20" y="14.00"
+          width="6.53" height="68.00"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="87.73" y="41.20"
+          width="6.53" height="40.80"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="98.27" y="34.40"
+          width="6.53" height="47.60"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="108.80" y="59.33"
+          width="6.53" height="22.67"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="119.33" y="48.00"
+          width="6.53" height="34.00"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="129.87" y="66.13"
+          width="6.53" height="15.87"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="140.40" y="72.93"
+          width="6.53" height="9.07"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="150.93" y="32.13"
+          width="6.53" height="49.87"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="161.47" y="25.33"
+          width="6.53" height="56.67"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="172.00" y="50.27"
+          width="6.53" height="31.73"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="182.53" y="54.80"
+          width="6.53" height="27.20"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="193.07" y="45.73"
+          width="6.53" height="36.27"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="203.60" y="72.93"
+          width="6.53" height="9.07"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="214.13" y="72.93"
+          width="6.53" height="9.07"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="224.67" y="72.93"
+          width="6.53" height="9.07"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="235.20" y="70.67"
+          width="6.53" height="11.33"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="245.73" y="68.40"
+          width="6.53" height="13.60"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="256.27" y="61.60"
+          width="6.53" height="20.40"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="266.80" y="54.80"
+          width="6.53" height="27.20"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="277.33" y="72.93"
+          width="6.53" height="9.07"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="287.87" y="63.87"
+          width="6.53" height="18.13"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="298.40" y="38.93"
+          width="6.53" height="43.07"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="308.93" y="54.80"
+          width="6.53" height="27.20"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="319.47" y="70.67"
+          width="6.53" height="11.33"
+          rx="8.00"
+          fill="#FDA4AF" />
+
+    <text x="14" y="95.00"
+      fill="#B07A93"
+      font-size="11">
+      Last 30 days
+    </text>
+
+    <text x="326.00" y="18"
+      text-anchor="end"
+      fill="#B07A93"
+      font-size="11">
+      max 30
+    </text>
+
+    <g transform="translate(0,134)">
+      <text x="0" y="0"
+        fill="#2A1A23"
+        font-size="30"
+        font-weight="820">
+        1,240
+      </text>
+
+      <text x="104" y="0"
+        fill="#8B5B72"
+        font-size="14"
+        font-weight="650">
+        Total contributions
+      </text>
+
+      <text x="0" y="30"
+        fill="#B07A93"
+        font-size="12">
+        Last active
+      </text>
+
+      <text x="74" y="30"
+        fill="#2A1A23"
+        font-size="12"
+        font-weight="700">
+        2025-12-31
+      </text>
+    </g>
+  </g>
+
+  <!-- MIDDLE: RING + STREAK -->
+  <g>
+    <circle cx="590" cy="108" r="52"
+      stroke="#F4C7DD"
+      stroke-width="10" />
+
+    <circle cx="590" cy="108" r="52"
+      stroke="url(#accent)"
+      stroke-width="10"
+      stroke-linecap="round"
+      stroke-dasharray="326.73 326.73"
+      transform="rotate(-90 590 108)" />
+
+    <text x="590" y="124.00"
+      text-anchor="middle"
+      fill="#2A1A23"
+      font-size="40"
+      font-weight="900">
+      120
+    </text>
+
+    <text x="590" y="192.00"
+      text-anchor="middle"
+      fill="#8B5B72"
+      font-size="14"
+      font-weight="450">
+      120-day commit streak
+    </text>
+
+    <text x="590" y="212.00"
+      text-anchor="middle"
+      fill="#B07A93"
+      font-size="12"
+      font-weight="420">
+      Coding consistently for 120 days in a row.
+    </text>
+  </g>
+
+  <!-- RIGHT: LIST -->
+  <g transform="translate(778,66)">
+    
+        <g transform="translate(0,0)">
+          <g transform="translate(0,-15)">
+            <svg x="0" y="0" width="20" height="20"
+              viewBox="0 0 24 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2.2l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.7 6.1 20.2l1.2-6.5-4.8-4.6 6.6-.9L12 2.2z" fill="#E11D7B" opacity="0.92"/>
+            </svg>
+          </g>
+
+          <text x="30" y="0"
+            fill="#E11D7B"
+            font-size="14.5"
+            font-weight="650">
+            Total Stars:
+          </text>
+
+          <text x="186" y="0"
+            fill="#A31555"
+            font-size="14.5"
+            font-weight="850">
+            14
+          </text>
+        </g>
+        <g transform="translate(0,32)">
+          <g transform="translate(0,-15)">
+            <svg x="0" y="0" width="20" height="20"
+              viewBox="0 0 24 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 12a3 3 0 1 0 6 0Zm-7 0h4m8 0h8" stroke="#E11D7B"
+              stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"
+              opacity="0.92" />
+            </svg>
+          </g>
+
+          <text x="30" y="0"
+            fill="#E11D7B"
+            font-size="14.5"
+            font-weight="650">
+            Total Commits:
+          </text>
+
+          <text x="186" y="0"
+            fill="#A31555"
+            font-size="14.5"
+            font-weight="850">
+            1.2k
+          </text>
+        </g>
+        <g transform="translate(0,64)">
+          <g transform="translate(0,-15)">
+            <svg x="0" y="0" width="20" height="20"
+              viewBox="0 0 24 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 4v16m0-13a2 2 0 1 0 0-4Zm0 14a2 2 0 1 0 0-4Zm6-14h6a2 2 0 0 1 2 2v7m0 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" stroke="#E11D7B"
+              stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"
+              opacity="0.92" />
+            </svg>
+          </g>
+
+          <text x="30" y="0"
+            fill="#E11D7B"
+            font-size="14.5"
+            font-weight="650">
+            Total PRs:
+          </text>
+
+          <text x="186" y="0"
+            fill="#A31555"
+            font-size="14.5"
+            font-weight="850">
+            1
+          </text>
+        </g>
+        <g transform="translate(0,96)">
+          <g transform="translate(0,-15)">
+            <svg x="0" y="0" width="20" height="20"
+              viewBox="0 0 24 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2a10 10 0 1 0 0 20Zm0 6v6m0 4h.01" stroke="#E11D7B"
+              stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"
+              opacity="0.92" />
+            </svg>
+          </g>
+
+          <text x="30" y="0"
+            fill="#E11D7B"
+            font-size="14.5"
+            font-weight="650">
+            Total Issues:
+          </text>
+
+          <text x="186" y="0"
+            fill="#A31555"
+            font-size="14.5"
+            font-weight="850">
+            0
+          </text>
+        </g>
+        <g transform="translate(0,128)">
+          <g transform="translate(0,-15)">
+            <svg x="0" y="0" width="20" height="20"
+              viewBox="0 0 24 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 6h16M4 10h16M4 14h16M4 18h16" stroke="#E11D7B"
+              stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"
+              opacity="0.92" />
+            </svg>
+          </g>
+
+          <text x="30" y="0"
+            fill="#E11D7B"
+            font-size="14.5"
+            font-weight="650">
+            Contributed to:
+          </text>
+
+          <text x="186" y="0"
+            fill="#A31555"
+            font-size="14.5"
+            font-weight="850">
+            41
+          </text>
+        </g>
+  </g>
+
+</svg>

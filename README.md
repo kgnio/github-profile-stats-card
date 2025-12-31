@@ -47,11 +47,11 @@ You can preview all themes here:
 
 ### Cupcake
 
-![Cupcake](https://kgnio-profile-card.vercel.app/themes/cupcake.png)
+![Cupcake](https://kgnio-profile-card.vercel.app/api/card?user=kgnio&theme=cupcake)
 
 ### Ice
 
-![Ice](https://kgnio-profile-card.vercel.app/themes/ice.png)
+![Ice](https://kgnio-profile-card.vercel.app/api/card?user=kgnio&theme=ice)
 
 ---
 

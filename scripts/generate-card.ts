@@ -92,7 +92,8 @@ function areaPath(values: number[], w: number, h: number, pad: number) {
 function iconPath(kind: string) {
   if (kind === "star")
     return "M12 2.2l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.7 6.1 20.2l1.2-6.5-4.8-4.6 6.6-.9L12 2.2z";
-  if (kind === "commit") return "M9 12a3 3 0 1 0 6 0Zm-7 0h4m8 0h8";
+  if (kind === "commit")
+    return "M9 12a3 3 0 1 0 6 0Zm-7 0h4m8 0h8";
   if (kind === "pr")
     return "M6 4v16m0-13a2 2 0 1 0 0-4Zm0 14a2 2 0 1 0 0-4Zm6-14h6a2 2 0 0 1 2 2v7m0 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z";
   if (kind === "issue") return "M12 2a10 10 0 1 0 0 20Zm0 6v6m0 4h.01";
@@ -307,12 +308,8 @@ function svgCard(input: {
     </linearGradient>
 
     <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
-      <stop stop-color="${theme.colors.chartFill}" stop-opacity="${
-    L.chartFillOpacityTop
-  }"/>
-      <stop offset="1" stop-color="${theme.colors.chartFill}" stop-opacity="${
-    L.chartFillOpacityBottom
-  }"/>
+      <stop stop-color="${theme.colors.chartFill}" stop-opacity="${L.chartFillOpacityTop}"/>
+      <stop offset="1" stop-color="${theme.colors.chartFill}" stop-opacity="${L.chartFillOpacityBottom}"/>
     </linearGradient>
 
     <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
@@ -489,29 +486,29 @@ async function main() {
   const theme = getTheme(themeKey);
 
   const q = `
-  query($login: String!) {
-    user(login: $login) {
-      contributionsCollection(includePrivateContributions: true) {
-        totalCommitContributions
-        totalIssueContributions
-        totalPullRequestContributions
-        totalRepositoriesWithContributedCommits
-        contributionCalendar {
-          totalContributions
-          weeks {
-            contributionDays {
-              date
-              contributionCount
+    query($login: String!) {
+      user(login: $login) {
+        contributionsCollection {
+          totalCommitContributions
+          totalIssueContributions
+          totalPullRequestContributions
+          totalRepositoriesWithContributedCommits
+          contributionCalendar {
+            totalContributions
+            weeks {
+              contributionDays {
+                date
+                contributionCount
+              }
             }
           }
         }
-      }
-      repositories(first: 100, ownerAffiliations: OWNER, isFork: false) {
-        nodes { stargazerCount }
+        repositories(first: 100, ownerAffiliations: OWNER, isFork: false) {
+          nodes { stargazerCount }
+        }
       }
     }
-  }
-`;
+  `;
 
   const data = await graphql(token, q, { login: username });
 

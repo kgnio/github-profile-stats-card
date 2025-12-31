@@ -52,3 +52,62 @@ jobs:
 
           git commit -m "chore: update public/card.svg"
           git push
+
+      - name: Checkout profile README repo (<username>/<username>)
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.CARD_USERNAME }}/${{ vars.CARD_USERNAME }}
+          token: ${{ secrets.PROFILE_REPO_TOKEN }}
+          path: profile-readme
+
+      - name: Update cache-buster on card URL in profile README
+        working-directory: profile-readme
+        shell: bash
+        env:
+          USERNAME: ${{ vars.CARD_USERNAME }}
+        run: |
+          set -euo pipefail
+
+          FILE="README.md"
+          if [ ! -f "$FILE" ]; then
+            echo "README.md not found in profile repo."
+            ls -la
+            exit 1
+          fi
+
+          TS="$(date +%s)"
+          BASE="https://raw.githubusercontent.com/${USERNAME}/github-profile-stats-card/main/public/card.svg"
+
+          # Update existing ?v=... or add it, or prepend if missing
+          if grep -q "${BASE}\?v=" "$FILE"; then
+            perl -0777 -i -pe "s#\Q${BASE}?v=\E\d+#${BASE}?v=${TS}#g" "$FILE"
+            echo "Updated existing v=..."
+          elif grep -q "${BASE}" "$FILE"; then
+            perl -0777 -i -pe "s#\Q${BASE}\E#${BASE}?v=${TS}#g" "$FILE"
+            echo "Added ?v=... to existing URL"
+          else
+            echo "Card URL not found in README.md, prepending a new line."
+            printf "![GitHub Profile Card](%s?v=%s)\n\n%s" "$BASE" "$TS" "$(cat "$FILE")" > "$FILE"
+          fi
+
+          echo "---- README.md (first 30 lines) ----"
+          sed -n '1,30p' README.md
+
+      - name: Commit & push profile README changes (if changed)
+        working-directory: profile-readme
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add README.md
+
+          if git diff --cached --quiet; then
+            echo "No README changes."
+            exit 0
+          fi
+
+          git commit -m "chore: bust cache for profile card"
+          git push

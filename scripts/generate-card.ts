@@ -6,6 +6,8 @@ import type { Theme } from "../types/theme";
 
 type Day = { date: string; count: number };
 
+/* ===================== DATA ===================== */
+
 async function graphql(
   token: string,
   query: string,
@@ -27,9 +29,7 @@ async function graphql(
   return json.data;
 }
 
-function clamp(n: number, a: number, b: number) {
-  return Math.max(a, Math.min(b, n));
-}
+const clamp = (n: number, a: number, b: number) => Math.max(a, Math.min(b, n));
 
 function compact(n: number) {
   if (!Number.isFinite(n)) return "0";
@@ -40,67 +40,51 @@ function compact(n: number) {
   return `${n}`;
 }
 
-function fmtISO(s?: string | null) {
-  return s || "-";
-}
+const fmtISO = (s?: string | null) => s || "-";
 
 function streakFromDailyCounts(daily: Day[]) {
+  let total = 0;
   let current = 0;
   let longest = 0;
-
   let run = 0;
-  for (const x of daily) {
-    if (x.count > 0) run++;
-    else run = 0;
-    if (run > longest) longest = run;
+
+  for (const d of daily) total += d.count;
+
+  for (const d of daily) {
+    run = d.count > 0 ? run + 1 : 0;
+    longest = Math.max(longest, run);
   }
 
-  let i = daily.length - 1;
-  while (i >= 0 && daily[i].count > 0) {
-    current++;
-    i--;
-  }
+  for (let i = daily.length - 1; i >= 0 && daily[i].count > 0; i--) current++;
 
-  let lastActive: string | null = null;
-  for (let j = daily.length - 1; j >= 0; j--) {
-    if (daily[j].count > 0) {
-      lastActive = daily[j].date;
-      break;
-    }
-  }
+  const lastActive =
+    [...daily].reverse().find((d) => d.count > 0)?.date ?? null;
 
-  return { current, longest, lastActive };
+  return { total, current, longest, lastActive };
 }
 
-function areaPath(
-  values: number[],
-  width: number,
-  height: number,
-  pad: number
-) {
-  const max = Math.max(1, ...values);
-  const w = width - pad * 2;
-  const h = height - pad * 2;
+/* ===================== SVG HELPERS ===================== */
 
+function areaPath(values: number[], w: number, h: number, pad: number) {
+  const max = Math.max(1, ...values);
+  const iw = w - pad * 2;
+  const ih = h - pad * 2;
   const denom = Math.max(1, values.length - 1);
 
-  const pts = values.map((v, idx) => {
-    const x = pad + (w * idx) / denom;
-    const y = pad + h - (h * v) / max;
+  const pts = values.map((v, i) => {
+    const x = pad + (iw * i) / denom;
+    const y = pad + ih - (ih * v) / max;
     return [x, y] as const;
   });
 
   const lineD = pts
-    .map(
-      (p, i) => `${i === 0 ? "M" : "L"} ${p[0].toFixed(2)} ${p[1].toFixed(2)}`
-    )
+    .map((p, i) => `${i ? "L" : "M"} ${p[0].toFixed(2)} ${p[1].toFixed(2)}`)
     .join(" ");
 
-  const baselineY = pad + h;
+  const baseY = pad + ih;
   const areaD =
-    `${lineD} ` +
-    `L ${pts[pts.length - 1][0].toFixed(2)} ${baselineY.toFixed(2)} ` +
-    `L ${pts[0][0].toFixed(2)} ${baselineY.toFixed(2)} Z`;
+    `${lineD} L ${pts.at(-1)![0].toFixed(2)} ${baseY.toFixed(2)} ` +
+    `L ${pts[0][0].toFixed(2)} ${baseY.toFixed(2)} Z`;
 
   return { lineD, areaD, max };
 }
@@ -109,13 +93,136 @@ function iconPath(kind: string) {
   if (kind === "star")
     return "M12 2.2l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.7 6.1 20.2l1.2-6.5-4.8-4.6 6.6-.9L12 2.2z";
   if (kind === "commit")
-    return "M9 12a3 3 0 1 0 6 0 3 3 0 0 0-6 0Zm-7 0h4m8 0h8";
+    return "M9 12a3 3 0 1 0 6 0Zm-7 0h4m8 0h8";
   if (kind === "pr")
-    return "M6 4v16m0-13a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm6-14h6a2 2 0 0 1 2 2v7m0 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z";
-  if (kind === "issue")
-    return "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 6v6m0 4h.01";
-  return "M4 6h16M4 10h16M4 14h16M4 18h16";
+    return "M6 4v16m0-13a2 2 0 1 0 0-4Zm0 14a2 2 0 1 0 0-4Zm6-14h6a2 2 0 0 1 2 2v7m0 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z";
+  if (kind === "issue") return "M12 2a10 10 0 1 0 0 20Zm0 6v6m0 4h.01";
+  if (kind === "list") return "M4 6h16M4 10h16M4 14h16M4 18h16";
+  return "";
 }
+
+function renderDivider(x: number, theme: Theme) {
+  const L = theme.layout;
+  if (L.dividerStyle === "none") return "";
+
+  const dash = L.dividerStyle === "dashed" ? L.dividerDash || "4 6" : "none";
+
+  return `<line x1="${x}" y1="${L.dividerTopY}" x2="${x}" y2="${
+    L.cardH - L.dividerBottomY
+  }"
+    stroke="${theme.colors.divider}"
+    stroke-width="${L.strokeDivider}"
+    stroke-dasharray="${dash}" />`;
+}
+
+function renderAccent(theme: Theme, W: number, H: number, pad: number) {
+  const L = theme.layout;
+  if (L.accentShapeVariant === "none") return "";
+
+  if (L.accentShapeVariant === "wave") {
+    const x0 = W - 340;
+    const x1 = W - 190;
+    const x2 = W - 90;
+    const y0 = pad;
+    const y1 = H * 0.55;
+    const y2 = H - pad;
+
+    return `<path d="M ${x0} ${y0}
+      C ${x1} ${y1}, ${x2} ${y1}, ${W} ${y2}
+      L ${W} ${y0} Z"
+      fill="url(#accent)" opacity="${L.accentShapeOpacity}" />`;
+  }
+
+  if (L.accentShapeVariant === "blob") {
+    const x = W - 260;
+    const y = pad + 10;
+    const w = 260;
+    const h = H - pad * 2 - 20;
+    return `<path d="
+      M ${x + w * 0.15} ${y + h * 0.1}
+      C ${x + w * 0.55} ${y - h * 0.05}, ${x + w * 1.05} ${y + h * 0.2}, ${
+      x + w * 0.85
+    } ${y + h * 0.55}
+      C ${x + w * 0.7} ${y + h * 0.9}, ${x + w * 0.25} ${y + h * 1.05}, ${
+      x + w * 0.1
+    } ${y + h * 0.7}
+      C ${x - w * 0.05} ${y + h * 0.4}, ${x + w * 0.0} ${y + h * 0.2}, ${
+      x + w * 0.15
+    } ${y + h * 0.1}
+      Z"
+      fill="url(#accent)" opacity="${L.accentShapeOpacity}" />`;
+  }
+
+  // diagonal
+  return `<path d="M${W - L.accentShapeX1} ${pad}
+    L${W - L.accentShapeX2} ${pad}
+    L${W - L.accentShapeX3} ${H - pad}
+    L${W - L.accentShapeX4} ${H - pad} Z"
+    fill="url(#accent)" opacity="${L.accentShapeOpacity}" />`;
+}
+
+function renderChart(
+  theme: Theme,
+  values: number[],
+  lineD: string,
+  areaD: string
+) {
+  const L = theme.layout;
+  const pad = L.chartPad;
+  const w = L.chartW;
+  const h = L.chartH;
+
+  if (L.chartVariant === "bars") {
+    const max = Math.max(1, ...values);
+    const gap = L.chartBarGap ?? 0;
+    const bw = (w - pad * 2 - gap * (values.length - 1)) / values.length;
+
+    return values
+      .map((v, i) => {
+        const bh = ((h - pad * 2) * v) / max;
+        const x = pad + i * (bw + gap);
+        const y = h - pad - bh;
+        return `<rect x="${x.toFixed(2)}" y="${y.toFixed(2)}"
+          width="${bw.toFixed(2)}" height="${bh.toFixed(2)}"
+          rx="${(L.chartBarRadius ?? 0).toFixed(2)}"
+          fill="${theme.colors.chartFill}" />`;
+      })
+      .join("");
+  }
+
+  if (L.chartVariant === "dots") {
+    const max = Math.max(1, ...values);
+    const denom = Math.max(1, values.length - 1);
+
+    return values
+      .map((v, i) => {
+        const x = pad + ((w - pad * 2) * i) / denom;
+        const y = pad + (h - pad * 2) - ((h - pad * 2) * v) / max;
+        return `<circle cx="${x.toFixed(2)}" cy="${y.toFixed(2)}"
+          r="${(L.chartDotR ?? 2).toFixed(2)}"
+          fill="${theme.colors.chartFill}" />`;
+      })
+      .join("");
+  }
+
+  if (L.chartVariant === "spark") {
+    const dash = L.chartLineDash ? L.chartLineDash : "none";
+    return `<path d="${lineD}"
+      stroke="url(#accent)"
+      stroke-width="${L.chartStroke}"
+      fill="none"
+      stroke-dasharray="${dash}" />`;
+  }
+
+  // area
+  return `
+    <path d="${areaD}" fill="url(#chartFill)" />
+    <path d="${lineD}" stroke="url(#accent)"
+      stroke-width="${L.chartStroke}" fill="none" />
+  `;
+}
+
+/* ===================== SVG CARD ===================== */
 
 function svgCard(input: {
   theme: Theme;
@@ -144,50 +251,25 @@ function svgCard(input: {
     contributedTo,
   } = input;
 
-  const W = 1080;
-  const H = 260;
-  const pad = 14;
+  const L = theme.layout;
+  const W = L.cardW;
+  const H = L.cardH;
+  const pad = L.cardPad;
 
-  const leftDivider = 430;
-  const rightDivider = 750;
+  const { lineD, areaD, max } = areaPath(
+    series30,
+    L.chartW,
+    L.chartH,
+    L.chartPad
+  );
 
-  const leftColX = 48;
-  const leftTopY = theme.layout.leftTopY;
+  const midX = (L.leftDividerX + L.rightDividerX) / 2;
+  const midY = L.ringCenterY + L.ringYOffset;
 
-  const chartW = 340;
-  const chartH = 96;
-
-  const {
-    lineD,
-    areaD,
-    max: max30,
-  } = areaPath(series30, chartW, chartH, theme.layout.chartPad);
-
-  const gridYs = Array.from({ length: theme.layout.gridLines + 1 }, (_, i) => {
-    const y =
-      theme.layout.chartPad +
-      ((chartH - theme.layout.chartPad * 2) * i) / theme.layout.gridLines;
-    return y;
-  });
-
-  const ringR = theme.layout.ringR;
-  const ringStroke = theme.layout.ringStroke;
-  const ringCirc = 2 * Math.PI * ringR;
+  const ringCirc = 2 * Math.PI * L.ringR;
   const denom = Math.max(1, longest, current);
   const ratio = clamp(current / denom, 0, 1);
   const dash = `${(ratio * ringCirc).toFixed(2)} ${ringCirc.toFixed(2)}`;
-
-  const midCenterX = (leftDivider + rightDivider) / 2;
-  const midCenterY = 118 + theme.layout.ringYOffset;
-
-  const streakTitle = `${current}-day commit streak`;
-  const streakDesc = `Coding consistently for ${current} days in a row.`;
-
-  const lastActiveText = fmtISO(lastActive);
-
-  const listX = rightDivider + theme.layout.listXPad;
-  const listY = theme.layout.listY;
-  const rowH = theme.layout.listRowH;
 
   const rows = [
     { icon: "star", label: "Total Stars:", value: compact(stars) },
@@ -197,9 +279,22 @@ function svgCard(input: {
     { icon: "list", label: "Contributed to:", value: compact(contributedTo) },
   ];
 
+  const gridLines = L.chartGrid
+    ? Array.from({ length: L.gridLines + 1 }, (_, i) => {
+        const y =
+          L.chartPad +
+          ((L.chartH - L.chartPad * 2) * i) / Math.max(1, L.gridLines);
+        return `<line x1="${L.chartPad}" y1="${y.toFixed(2)}"
+          x2="${(L.chartW - L.chartPad).toFixed(2)}" y2="${y.toFixed(2)}"
+          stroke="${theme.colors.panelStroke}"
+          opacity="${L.gridOpacity}" />`;
+      }).join("")
+    : "";
+
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" fill="none"
-     xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GitHub stats card">
+  xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GitHub stats card">
+
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="${W}" y2="${H}" gradientUnits="userSpaceOnUse">
       <stop stop-color="${theme.colors.bgStops[0]}"/>
@@ -207,146 +302,177 @@ function svgCard(input: {
     </linearGradient>
 
     <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
-      <stop stop-color="${theme.colors.accentStops[0]}"/>
-      <stop offset="0.55" stop-color="${theme.colors.accentStops[1]}"/>
-      <stop offset="1" stop-color="${theme.colors.accentStops[2]}"/>
+      ${theme.colors.accentStops
+        .map((c, i) => `<stop offset="${i / 2}" stop-color="${c}"/>`)
+        .join("")}
     </linearGradient>
 
     <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
-      <stop stop-color="${theme.colors.chartFill}" stop-opacity="0.22"/>
-      <stop offset="1" stop-color="${theme.colors.chartFill}" stop-opacity="0"/>
+      <stop stop-color="${theme.colors.chartFill}" stop-opacity="${L.chartFillOpacityTop}"/>
+      <stop offset="1" stop-color="${theme.colors.chartFill}" stop-opacity="${L.chartFillOpacityBottom}"/>
     </linearGradient>
 
-    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity="0.22"/>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="${L.shadowDx}" dy="${L.shadowDy}"
+        stdDeviation="${L.shadowBlur}"
+        flood-color="${theme.colors.shadowColor}"
+        flood-opacity="${L.shadowOpacity}" />
     </filter>
+
+    <style>
+      text { font-family: ${L.fontFamily}; dominant-baseline: alphabetic; }
+    </style>
   </defs>
 
   <rect x="${pad}" y="${pad}" width="${W - pad * 2}" height="${H - pad * 2}"
-        rx="${theme.layout.radiusCard}" fill="url(#bg)" stroke="${
-    theme.colors.cardStroke
-  }"
-        stroke-width="${theme.layout.strokeCard}" filter="url(#softShadow)"/>
+    rx="${L.radiusCard}" fill="url(#bg)"
+    stroke="${theme.colors.cardStroke}"
+    stroke-width="${L.strokeCard}"
+    filter="url(#shadow)" />
 
-  <path d="M${W - 360} ${pad} L${W - 140} ${pad} L${W - 40} ${H - pad} L${
-    W - 260
-  } ${H - pad} Z"
-        fill="url(#accent)" opacity="0.07"/>
+  ${renderAccent(theme, W, H, pad)}
+  ${renderDivider(L.leftDividerX, theme)}
+  ${renderDivider(L.rightDividerX, theme)}
 
-  <line x1="${leftDivider}" y1="52" x2="${leftDivider}" y2="${H - 52}"
-        stroke="${theme.colors.divider}" stroke-width="${
-    theme.layout.strokeDivider
-  }"/>
-  <line x1="${rightDivider}" y1="52" x2="${rightDivider}" y2="${H - 52}"
-        stroke="${theme.colors.divider}" stroke-width="${
-    theme.layout.strokeDivider
-  }"/>
+  <!-- LEFT: CHART + METRICS -->
+  <g transform="translate(${L.leftColX},${L.leftTopY})">
+    <rect x="0" y="0" width="${L.chartW}" height="${L.chartH}"
+      rx="${L.radiusPanel}"
+      fill="${theme.colors.panelBg}"
+      stroke="${theme.colors.panelStroke}" />
 
-  <g transform="translate(${leftColX},${leftTopY})">
-    <g>
-      <rect x="0" y="0" width="${chartW}" height="${chartH}" rx="${
-    theme.layout.radiusPanel
-  }"
-            fill="${theme.colors.panelBg}" stroke="${
-    theme.colors.panelStroke
-  }"/>
-      ${gridYs
-        .map(
-          (y) =>
-            `<line x1="${theme.layout.chartPad}" y1="${y.toFixed(2)}" x2="${(
-              chartW - theme.layout.chartPad
-            ).toFixed(2)}" y2="${y.toFixed(2)}" stroke="${
-              theme.colors.panelStroke
-            }" opacity="0.55"/>`
-        )
-        .join("\n")}
-      <path d="${areaD}" fill="url(#chartFill)"/>
-      <path d="${lineD}" stroke="url(#accent)" stroke-width="${
-    theme.layout.chartStroke
-  }" fill="none"/>
-      <text x="${theme.layout.chartPad}" y="${chartH - 10}" fill="${
-    theme.colors.textDim
-  }"
-            font-size="11" font-family="ui-sans-serif, system-ui">Last 30 days</text>
-      <text x="${
-        chartW - theme.layout.chartPad
-      }" y="18" text-anchor="end" fill="${theme.colors.textDim}"
-            font-size="11" font-family="ui-sans-serif, system-ui">max ${max30}</text>
-    </g>
+    ${gridLines}
 
-    <g transform="translate(0,${theme.layout.metricsY})">
-      <text x="0" y="0" fill="${theme.colors.textStrong}" font-size="${
-    theme.layout.totalFontSize
-  }" font-weight="800"
-            font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto">${total.toLocaleString(
-              "en-US"
-            )}</text>
+    ${renderChart(theme, series30, lineD, areaD)}
 
-      <text x="${theme.layout.totalLabelX}" y="0" fill="${
-    theme.colors.textMuted
-  }" font-size="14" font-weight="600"
-            font-family="ui-sans-serif, system-ui">Total contributions</text>
+    <text x="${L.chartPad}" y="${(L.chartH - L.chartLabelBottomPad).toFixed(2)}"
+      fill="${theme.colors.textDim}"
+      font-size="${L.chartLabelFontSize}">
+      ${L.chartLabelLeftText}
+    </text>
 
-      <text x="0" y="30" fill="${
-        theme.colors.textDim
-      }" font-size="12" font-family="ui-sans-serif, system-ui">Last active</text>
-      <text x="74" y="30" fill="${
-        theme.colors.textStrong
-      }" font-size="12" font-weight="650"
-            font-family="ui-sans-serif, system-ui">${lastActiveText}</text>
+    <text x="${(L.chartW - L.chartPad).toFixed(2)}" y="${L.chartMaxLabelY}"
+      text-anchor="end"
+      fill="${theme.colors.textDim}"
+      font-size="${L.chartLabelFontSize}">
+      ${L.chartLabelRightPrefix} ${max}
+    </text>
+
+    <g transform="translate(0,${L.metricsY})">
+      <text x="0" y="0"
+        fill="${theme.colors.textStrong}"
+        font-size="${L.totalFontSize}"
+        font-weight="${L.totalFontWeight}">
+        ${total.toLocaleString("en-US")}
+      </text>
+
+      <text x="${L.totalLabelX}" y="0"
+        fill="${theme.colors.textMuted}"
+        font-size="${L.totalLabelFontSize}"
+        font-weight="${L.totalLabelFontWeight}">
+        ${L.totalLabelText}
+      </text>
+
+      <text x="0" y="${L.lastActiveRowY}"
+        fill="${theme.colors.textDim}"
+        font-size="${L.lastActiveLabelFontSize}">
+        ${L.lastActiveLabelText}
+      </text>
+
+      <text x="${L.lastActiveValueX}" y="${L.lastActiveRowY}"
+        fill="${theme.colors.textStrong}"
+        font-size="${L.lastActiveValueFontSize}"
+        font-weight="${L.lastActiveValueFontWeight}">
+        ${fmtISO(lastActive)}
+      </text>
     </g>
   </g>
 
+  <!-- MIDDLE: RING + STREAK -->
   <g>
-    <circle cx="${midCenterX}" cy="${midCenterY}" r="${ringR}" stroke="${
-    theme.colors.divider
-  }" stroke-width="${ringStroke}"/>
-    <circle cx="${midCenterX}" cy="${midCenterY}" r="${ringR}" stroke="url(#accent)" stroke-width="${ringStroke}"
-      stroke-linecap="round" stroke-dasharray="${dash}"
-      transform="rotate(-90 ${midCenterX} ${midCenterY})"/>
+    <circle cx="${midX}" cy="${midY}" r="${L.ringR}"
+      stroke="${theme.colors.divider}"
+      stroke-width="${L.ringStroke}" />
 
-    <text x="${midCenterX}" y="${midCenterY + 16}" text-anchor="middle" fill="${
-    theme.colors.textStrong
-  }"
-      font-size="40" font-weight="850" font-family="ui-sans-serif, system-ui">${current}</text>
+    <circle cx="${midX}" cy="${midY}" r="${L.ringR}"
+      stroke="url(#accent)"
+      stroke-width="${L.ringStroke}"
+      stroke-linecap="round"
+      stroke-dasharray="${dash}"
+      transform="rotate(-90 ${midX} ${midY})" />
 
-    <text x="${midCenterX}" y="${midCenterY + 74}" text-anchor="middle" fill="${
-    theme.colors.textMuted
-  }"
-      font-size="14" font-family="ui-sans-serif, system-ui">${streakTitle}</text>
+    <text x="${midX}" y="${(midY + L.ringValueDy).toFixed(2)}"
+      text-anchor="middle"
+      fill="${theme.colors.textStrong}"
+      font-size="${L.ringValueFontSize}"
+      font-weight="${L.ringValueFontWeight}">
+      ${current}
+    </text>
 
-    <text x="${midCenterX}" y="${midCenterY + 94}" text-anchor="middle" fill="${
-    theme.colors.textDim
-  }"
-      font-size="12" font-family="ui-sans-serif, system-ui">${streakDesc}</text>
+    <text x="${midX}" y="${(midY + L.streakTitleDy).toFixed(2)}"
+      text-anchor="middle"
+      fill="${theme.colors.textMuted}"
+      font-size="${L.streakTitleFontSize}"
+      font-weight="${L.streakTitleFontWeight}">
+      ${current}-day commit streak
+    </text>
+
+    <text x="${midX}" y="${(midY + L.streakDescDy).toFixed(2)}"
+      text-anchor="middle"
+      fill="${theme.colors.textDim}"
+      font-size="${L.streakDescFontSize}"
+      font-weight="${L.streakDescFontWeight}">
+      Coding consistently for ${current} days in a row.
+    </text>
   </g>
 
-  <g transform="translate(${listX},${listY})">
+  <!-- RIGHT: LIST -->
+  <g transform="translate(${L.rightDividerX + L.listXPad},${L.listY})">
     ${rows
-      .map((row, idx) => {
-        const y = idx * rowH;
-        const p = iconPath(row.icon);
-        const isStar = row.icon === "star";
+      .map((r, i) => {
+        const y = i * L.listRowH;
+        const d = iconPath(r.icon);
+        const isStar = r.icon === "star";
 
-        const iconSvg = isStar
-          ? `<path d="${p}" fill="${theme.colors.listIcon}" opacity="0.95"/>`
-          : `<path d="${p}" stroke="${theme.colors.listIcon}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>`;
+        const icon = isStar
+          ? `<path d="${d}" fill="${theme.colors.listIcon}" opacity="${L.listIconOpacity}"/>`
+          : `<path d="${d}" stroke="${theme.colors.listIcon}"
+              stroke-width="${L.listIconStroke}"
+              stroke-linecap="round" stroke-linejoin="round"
+              opacity="${L.listIconOpacity}" />`;
 
         return `
         <g transform="translate(0,${y})">
-          <g transform="translate(0,-15)">
-            <svg x="0" y="0" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              ${iconSvg}
+          <g transform="translate(0,${L.listIconDy})">
+            <svg x="0" y="0" width="${L.listIconBox}" height="${L.listIconBox}"
+              viewBox="0 0 24 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              ${icon}
             </svg>
           </g>
-          <text x="30" y="0" fill="${theme.colors.listLabel}" font-size="14.5" font-weight="650" font-family="ui-sans-serif, system-ui">${row.label}</text>
-          <text x="186" y="0" fill="${theme.colors.listValue}" font-size="14.5" font-weight="850" font-family="ui-sans-serif, system-ui">${row.value}</text>
+
+          <text x="${L.listLabelX}" y="0"
+            fill="${theme.colors.listLabel}"
+            font-size="${L.listFontSize}"
+            font-weight="${L.listLabelWeight}">
+            ${r.label}
+          </text>
+
+          <text x="${L.listValueX}" y="0"
+            fill="${theme.colors.listValue}"
+            font-size="${L.listFontSize}"
+            font-weight="${L.listValueWeight}">
+            ${r.value}
+          </text>
         </g>`;
       })
-      .join("\n")}
+      .join("")}
   </g>
+
 </svg>`;
 }
+
+/* ===================== MAIN ===================== */
 
 async function main() {
   const token = process.env.GH_TOKEN;
@@ -394,14 +520,10 @@ async function main() {
     .map((d: any) => ({ date: d.date, count: d.contributionCount }))
     .sort((a, b) => a.date.localeCompare(b.date));
 
-  const { current, longest, lastActive } = streakFromDailyCounts(daily);
+  const { total, current, longest, lastActive } = streakFromDailyCounts(daily);
 
-  const last = daily.slice(-30).map((d) => d.count);
-  const series30 = Array.from({ length: 30 }, (_, i) => last[i] ?? 0);
-
-  const total =
-    data.user.contributionsCollection.contributionCalendar.totalContributions ||
-    0;
+  const series30Raw = daily.slice(-30).map((d) => d.count);
+  const series30 = Array.from({ length: 30 }, (_, i) => series30Raw[i] ?? 0);
 
   const commits =
     data.user.contributionsCollection.totalCommitContributions || 0;
@@ -419,7 +541,7 @@ async function main() {
 
   const svg = svgCard({
     theme,
-    total,
+    total: total || 0,
     current,
     longest,
     lastActive,

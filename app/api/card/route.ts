@@ -102,14 +102,34 @@ function renderDivider(x: number, theme: Theme) {
   const L = theme.layout;
   if (L.dividerStyle === "none") return "";
 
-  const dash = L.dividerStyle === "dashed" ? L.dividerDash || "4 6" : "none";
+  const y1 = L.dividerTopY;
+  const y2 = L.cardH - L.dividerBottomY;
 
-  return `<line x1="${x}" y1="${L.dividerTopY}" x2="${x}" y2="${
-    L.cardH - L.dividerBottomY
-  }"
-    stroke="${theme.colors.divider}"
-    stroke-width="${L.strokeDivider}"
-    stroke-dasharray="${dash}" />`;
+  if (L.dividerStyle === "solid") {
+    return `<line x1="${x}" y1="${y1}" x2="${x}" y2="${y2}"
+      stroke="${theme.colors.divider}"
+      stroke-width="${L.strokeDivider}" />`;
+  }
+
+  const dash1 = L.dividerDash || "10 8"; 
+  const dash2 = "2 7";
+
+  const w1 = L.strokeDivider; 
+  const w2 = Math.max(1.2, L.strokeDivider + 0.4); 
+
+  return `
+    <line x1="${x}" y1="${y1}" x2="${x}" y2="${y2}"
+      stroke="${theme.colors.divider}"
+      stroke-width="${w1}"
+      stroke-dasharray="${dash1}"
+      opacity="0.85" />
+
+    <line x1="${x}" y1="${y1}" x2="${x}" y2="${y2}"
+      stroke="url(#accent)"
+      stroke-width="${w2}"
+      stroke-dasharray="${dash2}"
+      opacity="0.65" />
+  `;
 }
 
 function renderAccent(theme: Theme, W: number, H: number, pad: number) {
@@ -214,6 +234,31 @@ function renderChart(
       stroke-width="${L.chartStroke}"
       fill="none"
       stroke-dasharray="${dash}" />`;
+  }
+
+  if (L.chartVariant === "sparkbars") {
+    const max = Math.max(1, ...values);
+    const denom = Math.max(1, values.length - 1);
+
+    const iw = w - pad * 2;
+    const ih = h - pad * 2;
+
+    const gap = 2;
+    const bw = Math.max(1, iw / values.length - gap);
+
+    return values
+      .map((v, i) => {
+        const x = pad + i * (bw + gap);
+        const bh = (ih * v) / max;
+        const y = pad + ih - bh;
+        const h2 = Math.max(1, bh);
+
+        return `<rect x="${x.toFixed(2)}" y="${(pad + ih - h2).toFixed(2)}"
+          width="${bw.toFixed(2)}" height="${h2.toFixed(2)}"
+          rx="${(L.chartBarRadius ?? 6).toFixed(2)}"
+          fill="url(#accent)" opacity="0.95" />`;
+      })
+      .join("");
   }
 
   // area

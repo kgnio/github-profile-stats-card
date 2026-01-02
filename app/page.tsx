@@ -13,10 +13,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 
-import {
-  ExternalLink,
-  Copy as CopyIcon,
-} from "lucide-react";
+import { ExternalLink, Copy as CopyIcon } from "lucide-react";
 import { Github } from "lucide-react";
 
 import { toast } from "sonner";
@@ -24,7 +21,8 @@ import { toast } from "sonner";
 const THEMES = [
   { key: "midnight", label: "Midnight" },
   { key: "cupcake", label: "Cupcake" },
-  { key: "ice", label: "Ice" },
+  { key: "ice", label: "Ice" }, 
+  { key: "sunset", label: "Sunset" },
 ] as const;
 
 type ThemeKey = (typeof THEMES)[number]["key"];

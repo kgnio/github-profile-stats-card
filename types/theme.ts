@@ -66,7 +66,7 @@ export type Theme = {
     chartPad: number;
     chartStroke: number;
 
-    chartVariant: "area" | "bars" | "dots" | "spark";
+    chartVariant: "area" | "bars" | "dots" | "spark" | "sparkbars";
     chartGrid: boolean;
     chartLineDash?: string;
 

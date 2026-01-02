@@ -92,8 +92,7 @@ function areaPath(values: number[], w: number, h: number, pad: number) {
 function iconPath(kind: string) {
   if (kind === "star")
     return "M12 2.2l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.7 6.1 20.2l1.2-6.5-4.8-4.6 6.6-.9L12 2.2z";
-  if (kind === "commit")
-    return "M9 12a3 3 0 1 0 6 0Zm-7 0h4m8 0h8";
+  if (kind === "commit") return "M9 12a3 3 0 1 0 6 0Zm-7 0h4m8 0h8";
   if (kind === "pr")
     return "M6 4v16m0-13a2 2 0 1 0 0-4Zm0 14a2 2 0 1 0 0-4Zm6-14h6a2 2 0 0 1 2 2v7m0 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z";
   if (kind === "issue") return "M12 2a10 10 0 1 0 0 20Zm0 6v6m0 4h.01";
@@ -105,14 +104,34 @@ function renderDivider(x: number, theme: Theme) {
   const L = theme.layout;
   if (L.dividerStyle === "none") return "";
 
-  const dash = L.dividerStyle === "dashed" ? L.dividerDash || "4 6" : "none";
+  const y1 = L.dividerTopY;
+  const y2 = L.cardH - L.dividerBottomY;
 
-  return `<line x1="${x}" y1="${L.dividerTopY}" x2="${x}" y2="${
-    L.cardH - L.dividerBottomY
-  }"
-    stroke="${theme.colors.divider}"
-    stroke-width="${L.strokeDivider}"
-    stroke-dasharray="${dash}" />`;
+  if (L.dividerStyle === "solid") {
+    return `<line x1="${x}" y1="${y1}" x2="${x}" y2="${y2}"
+      stroke="${theme.colors.divider}"
+      stroke-width="${L.strokeDivider}" />`;
+  }
+
+  const dash1 = L.dividerDash || "10 8";
+  const dash2 = "2 7";
+
+  const w1 = L.strokeDivider;
+  const w2 = Math.max(1.2, L.strokeDivider + 0.4);
+
+  return `
+    <line x1="${x}" y1="${y1}" x2="${x}" y2="${y2}"
+      stroke="${theme.colors.divider}"
+      stroke-width="${w1}"
+      stroke-dasharray="${dash1}"
+      opacity="0.85" />
+
+    <line x1="${x}" y1="${y1}" x2="${x}" y2="${y2}"
+      stroke="url(#accent)"
+      stroke-width="${w2}"
+      stroke-dasharray="${dash2}"
+      opacity="0.65" />
+  `;
 }
 
 function renderAccent(theme: Theme, W: number, H: number, pad: number) {
@@ -214,6 +233,30 @@ function renderChart(
       stroke-dasharray="${dash}" />`;
   }
 
+  if (L.chartVariant === "sparkbars") {
+    const max = Math.max(1, ...values);
+    const denom = Math.max(1, values.length - 1);
+
+    const iw = w - pad * 2;
+    const ih = h - pad * 2;
+
+    const gap = 2;
+    const bw = Math.max(1, iw / values.length - gap);
+
+    return values
+      .map((v, i) => {
+        const x = pad + i * (bw + gap);
+        const bh = (ih * v) / max;
+        const y = pad + ih - bh;
+        const h2 = Math.max(1, bh);
+
+        return `<rect x="${x.toFixed(2)}" y="${(pad + ih - h2).toFixed(2)}"
+          width="${bw.toFixed(2)}" height="${h2.toFixed(2)}"
+          rx="${(L.chartBarRadius ?? 6).toFixed(2)}"
+          fill="url(#accent)" opacity="0.95" />`;
+      })
+      .join("");
+  }
   // area
   return `
     <path d="${areaD}" fill="url(#chartFill)" />
@@ -308,8 +351,12 @@ function svgCard(input: {
     </linearGradient>
 
     <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
-      <stop stop-color="${theme.colors.chartFill}" stop-opacity="${L.chartFillOpacityTop}"/>
-      <stop offset="1" stop-color="${theme.colors.chartFill}" stop-opacity="${L.chartFillOpacityBottom}"/>
+      <stop stop-color="${theme.colors.chartFill}" stop-opacity="${
+    L.chartFillOpacityTop
+  }"/>
+      <stop offset="1" stop-color="${theme.colors.chartFill}" stop-opacity="${
+    L.chartFillOpacityBottom
+  }"/>
     </linearGradient>
 
     <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">

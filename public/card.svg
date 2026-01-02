@@ -40,14 +40,32 @@
     L1040 246
     L820 246 Z"
     fill="url(#accent)" opacity="0.04" />
-  <line x1="430" y1="52" x2="430" y2="208"
-    stroke="#F4C7DD"
-    stroke-width="1"
-    stroke-dasharray="3 7" />
-  <line x1="750" y1="52" x2="750" y2="208"
-    stroke="#F4C7DD"
-    stroke-width="1"
-    stroke-dasharray="3 7" />
+  
+    <line x1="430" y1="52" x2="430" y2="208"
+      stroke="#F4C7DD"
+      stroke-width="1"
+      stroke-dasharray="3 7"
+      opacity="0.85" />
+
+    <line x1="430" y1="52" x2="430" y2="208"
+      stroke="url(#accent)"
+      stroke-width="1.4"
+      stroke-dasharray="2 7"
+      opacity="0.65" />
+  
+  
+    <line x1="750" y1="52" x2="750" y2="208"
+      stroke="#F4C7DD"
+      stroke-width="1"
+      stroke-dasharray="3 7"
+      opacity="0.85" />
+
+    <line x1="750" y1="52" x2="750" y2="208"
+      stroke="url(#accent)"
+      stroke-width="1.4"
+      stroke-dasharray="2 7"
+      opacity="0.65" />
+  
 
   <!-- LEFT: CHART + METRICS -->
   <g transform="translate(48,58)">
@@ -145,8 +163,8 @@
           fill="#FDA4AF" /><rect x="308.93" y="72.93"
           width="6.53" height="9.07"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="319.47" y="77.47"
-          width="6.53" height="4.53"
+          fill="#FDA4AF" /><rect x="319.47" y="61.60"
+          width="6.53" height="20.40"
           rx="8.00"
           fill="#FDA4AF" />
 
@@ -168,7 +186,7 @@
         fill="#2A1A23"
         font-size="30"
         font-weight="820">
-        1,261
+        1,268
       </text>
 
       <text x="104" y="0"

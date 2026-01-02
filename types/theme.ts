@@ -36,7 +36,6 @@ export type Theme = {
     shadowBlur: number;
     shadowOpacity: number;
 
-    /* ───────── DIVIDER ───────── */
     leftDividerX: number;
     rightDividerX: number;
     dividerTopY: number;
@@ -46,7 +45,6 @@ export type Theme = {
     dividerStyle: "solid" | "dashed" | "none";
     dividerDash?: string;
 
-    /* ───────── ACCENT SHAPE ───────── */
     accentShapeVariant: "diagonal" | "wave" | "blob" | "none";
     accentShapeX1: number;
     accentShapeX2: number;
@@ -54,11 +52,9 @@ export type Theme = {
     accentShapeX4: number;
     accentShapeOpacity: number;
 
-    /* ───────── LEFT COLUMN ───────── */
     leftColX: number;
     leftTopY: number;
 
-    /* ───────── CHART ───────── */
     chartW: number;
     chartH: number;
     radiusPanel: number;
@@ -66,7 +62,17 @@ export type Theme = {
     chartPad: number;
     chartStroke: number;
 
-    chartVariant: "area" | "bars" | "dots" | "spark" | "sparkbars";
+    chartVariant:
+      | "area"
+      | "bars"
+      | "dots"
+      | "spark"
+      | "sparkbars"
+      | "steps"
+      | "lollipop"
+      | "needle"
+      | "peaks"
+      | "sparkareaThin";
     chartGrid: boolean;
     chartLineDash?: string;
 
@@ -86,7 +92,6 @@ export type Theme = {
     chartLabelBottomPad: number;
     chartMaxLabelY: number;
 
-    /* ───────── METRICS ───────── */
     metricsY: number;
 
     totalFontSize: number;
@@ -103,7 +108,6 @@ export type Theme = {
     lastActiveValueFontSize: number;
     lastActiveValueFontWeight: number;
 
-    /* ───────── RING ───────── */
     ringCenterY: number;
     ringYOffset: number;
     ringR: number;
@@ -121,7 +125,6 @@ export type Theme = {
     streakDescFontSize: number;
     streakDescFontWeight: number;
 
-    /* ───────── LIST ───────── */
     listXPad: number;
     listY: number;
     listRowH: number;

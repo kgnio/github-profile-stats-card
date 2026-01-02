@@ -53,6 +53,10 @@ You can preview all themes here:
 
 ![Ice](https://kgnio-profile-card.vercel.app/api/card?user=kgnio&theme=ice)
 
+### Sunset
+
+![Sunset](https://kgnio-profile-card.vercel.app/api/card?user=kgnio&theme=sunset)
+
 ---
 
 # Option A — Use my hosted deployment (recommended)
@@ -79,7 +83,7 @@ You do **not** need to clone or run anything.
 4. Replace:
 
    - `<YOUR_USERNAME>` with your GitHub username
-   - `<THEME>` with one of: `midnight`, `cupcake`, `ice`
+   - `<THEME>` with one of: `midnight`, `cupcake`, `ice`, `sunset`
 
 5. Commit your changes. Done 🎉
 
@@ -150,8 +154,8 @@ https://github.com/<username>/github-profile-stats-card
 
 This workflow needs a token for **two jobs**:
 
-1) **Read** your GitHub profile/repo stats via the GitHub **GraphQL** API  
-2) **Write** commits back to:
+1. **Read** your GitHub profile/repo stats via the GitHub **GraphQL** API
+2. **Write** commits back to:
    - `github-profile-stats-card` (to commit `public/card.svg`)
    - your profile repo (`<username>/<username>`) if you enabled the cache-buster step
 
@@ -171,8 +175,8 @@ Instead, you choose **Repository access** + **Permissions**.
 - **Token name:** `profile-card-automation`
 - **Expiration:** 30–90 days
 - **Resource owner:** your account
-- **Repository access:**  
-  - **All repositories** (recommended if you want *private repos included* in totals), or  
+- **Repository access:**
+  - **All repositories** (recommended if you want _private repos included_ in totals), or
   - **Only select repositories** → choose:
     - `github-profile-stats-card`
     - `<username>` (your profile README repo)
@@ -180,9 +184,11 @@ Instead, you choose **Repository access** + **Permissions**.
 #### Permissions
 
 **Repository permissions**
+
 - **Contents:** **Read and write** (required to commit SVG + update profile README)
 
 **Account permissions**
+
 - **Profile:** **Read-only** (recommended for user/profile reads)
 
 > Note: GitHub marks **Metadata** as “Required” automatically for repo access. Keep it as-is.
@@ -203,7 +209,7 @@ Click **Generate token** and **copy it immediately**.
 Add:
 
 - **Name:** `PROFILE_REPO_TOKEN`
-- **Value:** *(paste the token you copied)*
+- **Value:** _(paste the token you copied)_
 
 Save it.
 
@@ -219,10 +225,10 @@ Settings → Secrets and variables → Actions → Variables
 
 Add the following variables:
 
-| Name | Value |
-|----|----|
-| `CARD_USERNAME` | your GitHub username |
-| `CARD_THEME` | `midnight` / `cupcake` / `ice` |
+| Name            | Value                                    |
+| --------------- | ---------------------------------------- |
+| `CARD_USERNAME` | your GitHub username                     |
+| `CARD_THEME`    | `midnight` / `cupcake` / `ice`/ `sunset` |
 
 ⚠️ **Important:**  
 These must be added under **Variables**, NOT Secrets.
@@ -331,7 +337,7 @@ You now have:
 - A clean, secure token setup
 - A profile README that always stays fresh
 
-Enjoy your profile card 
+Enjoy your profile card
 
 ---
 

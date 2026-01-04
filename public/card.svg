@@ -163,8 +163,8 @@
           fill="url(#accent)" opacity="0.95" /><rect x="305.20" y="72.93"
           width="8.40" height="9.07"
           rx="0.00"
-          fill="url(#accent)" opacity="0.95" /><rect x="315.60" y="75.20"
-          width="8.40" height="6.80"
+          fill="url(#accent)" opacity="0.95" /><rect x="315.60" y="72.93"
+          width="8.40" height="9.07"
           rx="0.00"
           fill="url(#accent)" opacity="0.95" />
 
@@ -186,7 +186,7 @@
         fill="#2B1410"
         font-size="30"
         font-weight="820">
-        1,277
+        1,278
       </text>
 
       <text x="104" y="0"

@@ -56,7 +56,6 @@ export const sunsetTheme: Theme = {
     dividerDash: "12 10",
 
     /* ================= ACCENT SHAPE ================= */
-    // sunset: soft diagonal glow
     accentShapeVariant: "diagonal",
     accentShapeX1: 360,
     accentShapeX2: 140,

@@ -5,8 +5,6 @@ export const runtime = "edge";
 
 type Day = { date: string; count: number };
 
-/* ===================== DATA ===================== */
-
 async function graphql(
   token: string,
   query: string,
@@ -61,8 +59,6 @@ function streakFromDailyCounts(daily: Day[]) {
   return { total, current, longest, lastActive };
 }
 
-/* ===================== SVG HELPERS ===================== */
-
 function areaPath(values: number[], w: number, h: number, pad: number) {
   const max = Math.max(1, ...values);
   const iw = w - pad * 2;
@@ -85,6 +81,30 @@ function areaPath(values: number[], w: number, h: number, pad: number) {
     `L ${pts[0][0].toFixed(2)} ${baseY.toFixed(2)} Z`;
 
   return { lineD, areaD, max };
+}
+
+function stepPath(values: number[], w: number, h: number, pad: number) {
+  const max = Math.max(1, ...values);
+  const iw = w - pad * 2;
+  const ih = h - pad * 2;
+  const n = Math.max(1, values.length);
+  const dx = iw / Math.max(1, n - 1);
+
+  const yOf = (v: number) => pad + ih - (ih * v) / max;
+
+  let d = "";
+  for (let i = 0; i < n; i++) {
+    const x = pad + dx * i;
+    const y = yOf(values[i] ?? 0);
+    if (i === 0) d += `M ${x.toFixed(2)} ${y.toFixed(2)} `;
+    else {
+      const yPrev = yOf(values[i - 1] ?? 0);
+      d += `L ${x.toFixed(2)} ${yPrev.toFixed(2)} `;
+      d += `L ${x.toFixed(2)} ${y.toFixed(2)} `;
+    }
+  }
+
+  return { stepD: d.trim(), max };
 }
 
 function iconPath(kind: string) {
@@ -111,11 +131,11 @@ function renderDivider(x: number, theme: Theme) {
       stroke-width="${L.strokeDivider}" />`;
   }
 
-  const dash1 = L.dividerDash || "10 8"; 
+  const dash1 = L.dividerDash || "10 8";
   const dash2 = "2 7";
 
-  const w1 = L.strokeDivider; 
-  const w2 = Math.max(1.2, L.strokeDivider + 0.4); 
+  const w1 = L.strokeDivider;
+  const w2 = Math.max(1.2, L.strokeDivider + 0.4);
 
   return `
     <line x1="${x}" y1="${y1}" x2="${x}" y2="${y2}"
@@ -137,7 +157,6 @@ function renderAccent(theme: Theme, W: number, H: number, pad: number) {
   if (L.accentShapeVariant === "none") return "";
 
   if (L.accentShapeVariant === "wave") {
-    // light decorative wave
     const x0 = W - 340;
     const x1 = W - 190;
     const x2 = W - 90;
@@ -152,7 +171,6 @@ function renderAccent(theme: Theme, W: number, H: number, pad: number) {
   }
 
   if (L.accentShapeVariant === "blob") {
-    // soft blob
     const x = W - 260;
     const y = pad + 10;
     const w = 260;
@@ -172,7 +190,6 @@ function renderAccent(theme: Theme, W: number, H: number, pad: number) {
       fill="url(#accent)" opacity="${L.accentShapeOpacity}" />`;
   }
 
-  // diagonal (midnight/cupcake)
   return `<path d="M${W - L.accentShapeX1} ${pad}
     L${W - L.accentShapeX2} ${pad}
     L${W - L.accentShapeX3} ${H - pad}
@@ -238,8 +255,6 @@ function renderChart(
 
   if (L.chartVariant === "sparkbars") {
     const max = Math.max(1, ...values);
-    const denom = Math.max(1, values.length - 1);
-
     const iw = w - pad * 2;
     const ih = h - pad * 2;
 
@@ -250,7 +265,6 @@ function renderChart(
       .map((v, i) => {
         const x = pad + i * (bw + gap);
         const bh = (ih * v) / max;
-        const y = pad + ih - bh;
         const h2 = Math.max(1, bh);
 
         return `<rect x="${x.toFixed(2)}" y="${(pad + ih - h2).toFixed(2)}"
@@ -261,15 +275,105 @@ function renderChart(
       .join("");
   }
 
-  // area
+  if (L.chartVariant === "steps") {
+    const { stepD } = stepPath(values, w, h, pad);
+    const dash = L.chartLineDash ? L.chartLineDash : "none";
+    return `<path d="${stepD}"
+      stroke="url(#accent)"
+      stroke-width="${L.chartStroke}"
+      fill="none"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-dasharray="${dash}" />`;
+  }
+
+  if (L.chartVariant === "lollipop") {
+    const max = Math.max(1, ...values);
+    const denom = Math.max(1, values.length - 1);
+    const iw = w - pad * 2;
+    const ih = h - pad * 2;
+    const baseY = pad + ih;
+    const r = L.chartDotR ?? 2.8;
+
+    return values
+      .map((v, i) => {
+        const x = pad + (iw * i) / denom;
+        const y = pad + ih - (ih * v) / max;
+
+        return `<line x1="${x.toFixed(2)}" y1="${baseY.toFixed(2)}"
+            x2="${x.toFixed(2)}" y2="${y.toFixed(2)}"
+            stroke="${
+              theme.colors.panelStroke
+            }" stroke-width="1" opacity="0.9" />
+          <circle cx="${x.toFixed(2)}" cy="${y.toFixed(2)}"
+            r="${r.toFixed(2)}"
+            fill="url(#accent)" opacity="0.95" />`;
+      })
+      .join("");
+  }
+
+  if (L.chartVariant === "needle") {
+    const max = Math.max(1, ...values);
+    const denom = Math.max(1, values.length - 1);
+    const iw = w - pad * 2;
+    const ih = h - pad * 2;
+    const baseY = pad + ih;
+
+    return values
+      .map((v, i) => {
+        const x = pad + (iw * i) / denom;
+        const y = pad + ih - (ih * v) / max;
+
+        return `<line x1="${x.toFixed(2)}" y1="${baseY.toFixed(2)}"
+          x2="${x.toFixed(2)}" y2="${y.toFixed(2)}"
+          stroke="url(#accent)" stroke-width="1.25" opacity="0.95"
+          stroke-linecap="round" />`;
+      })
+      .join("");
+  }
+
+  if (L.chartVariant === "peaks") {
+    const max = Math.max(1, ...values);
+    const denom = Math.max(1, values.length - 1);
+    const iw = w - pad * 2;
+    const ih = h - pad * 2;
+    const r = (L.chartDotR ?? 2.8) + 0.6;
+
+    const isPeak = (i: number) => {
+      const v = values[i] ?? 0;
+      if (v <= 0) return false;
+      const prev = values[i - 1] ?? -1;
+      const next = values[i + 1] ?? -1;
+      return v >= prev && v >= next;
+    };
+
+    return values
+      .map((v, i) => {
+        if (!isPeak(i)) return "";
+        const x = pad + (iw * i) / denom;
+        const y = pad + ih - (ih * v) / max;
+
+        return `<circle cx="${x.toFixed(2)}" cy="${y.toFixed(2)}"
+          r="${r.toFixed(2)}"
+          fill="url(#accent)" opacity="0.98" />`;
+      })
+      .join("");
+  }
+
+  if (L.chartVariant === "sparkareaThin") {
+    return `
+      <path d="${areaD}" fill="url(#chartFill)" opacity="0.55" />
+      <path d="${lineD}" stroke="url(#accent)"
+        stroke-width="${Math.max(1.6, L.chartStroke - 0.6)}" fill="none" />
+    `;
+  }
+
   return `
     <path d="${areaD}" fill="url(#chartFill)" />
     <path d="${lineD}" stroke="url(#accent)"
       stroke-width="${L.chartStroke}" fill="none" />
   `;
 }
-
-/* ===================== SVG CARD ===================== */
 
 function svgCard(input: {
   theme: Theme;
@@ -303,12 +407,8 @@ function svgCard(input: {
   const H = L.cardH;
   const pad = L.cardPad;
 
-  const { lineD, areaD, max } = areaPath(
-    series30,
-    L.chartW,
-    L.chartH,
-    L.chartPad
-  );
+  const { lineD, areaD } = areaPath(series30, L.chartW, L.chartH, L.chartPad);
+  const maxLabel = Math.max(1, ...series30);
 
   const midX = (L.leftDividerX + L.rightDividerX) / 2;
   const midY = L.ringCenterY + L.ringYOffset;
@@ -385,7 +485,6 @@ function svgCard(input: {
   ${renderDivider(L.leftDividerX, theme)}
   ${renderDivider(L.rightDividerX, theme)}
 
-  <!-- LEFT: CHART + METRICS -->
   <g transform="translate(${L.leftColX},${L.leftTopY})">
     <rect x="0" y="0" width="${L.chartW}" height="${L.chartH}"
       rx="${L.radiusPanel}"
@@ -406,7 +505,7 @@ function svgCard(input: {
       text-anchor="end"
       fill="${theme.colors.textDim}"
       font-size="${L.chartLabelFontSize}">
-      ${L.chartLabelRightPrefix} ${max}
+      ${L.chartLabelRightPrefix} ${maxLabel}
     </text>
 
     <g transform="translate(0,${L.metricsY})">
@@ -439,7 +538,6 @@ function svgCard(input: {
     </g>
   </g>
 
-  <!-- MIDDLE: RING + STREAK -->
   <g>
     <circle cx="${midX}" cy="${midY}" r="${L.ringR}"
       stroke="${theme.colors.divider}"
@@ -477,7 +575,6 @@ function svgCard(input: {
     </text>
   </g>
 
-  <!-- RIGHT: LIST -->
   <g transform="translate(${L.rightDividerX + L.listXPad},${L.listY})">
     ${rows
       .map((r, i) => {
@@ -523,8 +620,6 @@ function svgCard(input: {
 </svg>`;
 }
 
-/* ===================== GET ===================== */
-
 export async function GET(req: Request) {
   try {
     const url = new URL(req.url);
@@ -565,7 +660,7 @@ export async function GET(req: Request) {
       data.user.contributionsCollection.contributionCalendar.weeks
         .flatMap((w: any) => w.contributionDays)
         .map((d: any) => ({ date: d.date, count: d.contributionCount }))
-        .sort((a: Day, b: Day) => a.date.localeCompare(b.date)); // ✅ streak hesapları için güvenli
+        .sort((a: Day, b: Day) => a.date.localeCompare(b.date));
 
     const { total, current, longest, lastActive } =
       streakFromDailyCounts(daily);

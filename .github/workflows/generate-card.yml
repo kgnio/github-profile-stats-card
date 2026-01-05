@@ -72,12 +72,20 @@ jobs:
           TS="$(date +%s)"
           BASE="https://raw.githubusercontent.com/${USERNAME}/github-profile-stats-card/main/public/card.svg"
 
-          if grep -q "${BASE}\?v=" "$FILE"; then
-            perl -0777 -i -pe "s#\Q${BASE}?v=\E\d+#${BASE}?v=${TS}#g" "$FILE"
-            echo "Updated existing v=..."
-          elif grep -q "${BASE}" "$FILE"; then
-            perl -0777 -i -pe "s#\Q${BASE}\E#${BASE}?v=${TS}#g" "$FILE"
-            echo "Added ?v=... to existing URL"
+          # 1) Eğer URL zaten varsa, kaç tane ?v= olursa olsun TEK ?v=TS'ye indir.
+          # 2) Eğer sadece BASE varsa, ?v=TS ekle.
+          if grep -Fq "$BASE" "$FILE"; then
+            perl -0777 -i -pe '
+              my $base = $ENV{BASE};
+              my $ts   = $ENV{TS};
+
+              # BASE?v=123?v=456?v=789  -> BASE?v=TS
+              s/\Q$base\E(?:\?v=\d+)+/$base?v=$ts/g;
+
+              # Sadece BASE geçen yerlerde (query yoksa) -> BASE?v=TS
+              s/\Q$base\E(?!\?)/$base?v=$ts/g;
+            ' "$FILE"
+            echo "Updated/normalized card URL to single ?v=${TS}"
           else
             echo "Card URL not found in README.md, prepending a new line."
             printf "![GitHub Profile Card](%s?v=%s)\n\n%s" "$BASE" "$TS" "$(cat "$FILE")" > "$FILE"
@@ -85,6 +93,10 @@ jobs:
 
           echo "---- README.md (first 30 lines) ----"
           sed -n '1,30p' README.md
+        env:
+          BASE: https://raw.githubusercontent.com/${{ vars.CARD_USERNAME }}/github-profile-stats-card/main/public/card.svg
+          TS: ${{ github.run_id }}
+
 
       - name: Commit & push profile README changes (if changed)
         working-directory: profile-readme

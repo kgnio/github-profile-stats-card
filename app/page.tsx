@@ -137,12 +137,6 @@ export default function Home() {
               <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-primary" />
               GitHub SVG generator
             </Badge>
-            <Badge
-              variant="outline"
-              className="rounded-full text-muted-foreground"
-            >
-              shadcn UI
-            </Badge>
           </div>
 
           <div className="space-y-2">

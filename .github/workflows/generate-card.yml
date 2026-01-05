@@ -33,7 +33,9 @@ jobs:
         run: npm run generate:card
 
       - name: Commit & Push card.svg (if changed)
+        shell: bash
         run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
@@ -59,6 +61,7 @@ jobs:
         shell: bash
         env:
           USERNAME: ${{ vars.CARD_USERNAME }}
+          TS: ${{ github.run_id }}
         run: |
           set -euo pipefail
 
@@ -69,13 +72,12 @@ jobs:
             exit 1
           fi
 
-          TS="$(date +%s)"
           BASE="https://raw.githubusercontent.com/${USERNAME}/github-profile-stats-card/main/public/card.svg"
 
-          # 1) Eğer URL zaten varsa, kaç tane ?v= olursa olsun TEK ?v=TS'ye indir.
-          # 2) Eğer sadece BASE varsa, ?v=TS ekle.
+          # Eğer URL zaten varsa, kaç tane ?v= olursa olsun TEK ?v=TS'ye indir.
+          # Eğer sadece BASE varsa, ?v=TS ekle.
           if grep -Fq "$BASE" "$FILE"; then
-            perl -0777 -i -pe '
+            BASE="$BASE" TS="$TS" perl -0777 -i -pe '
               my $base = $ENV{BASE};
               my $ts   = $ENV{TS};
 
@@ -93,10 +95,6 @@ jobs:
 
           echo "---- README.md (first 30 lines) ----"
           sed -n '1,30p' README.md
-        env:
-          BASE: https://raw.githubusercontent.com/${{ vars.CARD_USERNAME }}/github-profile-stats-card/main/public/card.svg
-          TS: ${{ github.run_id }}
-
 
       - name: Commit & push profile README changes (if changed)
         working-directory: profile-readme

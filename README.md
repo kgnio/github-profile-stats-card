@@ -45,6 +45,18 @@ You can preview all themes here:
 
 ![Midnight](https://kgnio-profile-card.vercel.app/api/card?user=kgnio&theme=midnight)
 
+### Azure Noir
+
+![Azure Noir](https://kgnio-profile-card.vercel.app/api/card?user=kgnio&theme=azure-noir)
+
+### Cyber City
+
+![Cyber City](https://kgnio-profile-card.vercel.app/api/card?user=kgnio&theme=cyber-city)
+
+### Darker Than Black
+
+![Darker Than Black](https://kgnio-profile-card.vercel.app/api/card?user=kgnio&theme=darker-than-black)
+
 ### Cupcake
 
 ![Cupcake](https://kgnio-profile-card.vercel.app/api/card?user=kgnio&theme=cupcake)
@@ -56,6 +68,10 @@ You can preview all themes here:
 ### Sunset
 
 ![Sunset](https://kgnio-profile-card.vercel.app/api/card?user=kgnio&theme=sunset)
+
+### Pine Tree
+
+![Pine Tree](https://kgnio-profile-card.vercel.app/api/card?user=kgnio&theme=pine-tree)
 
 ---
 

@@ -30,7 +30,7 @@ export const sunsetTheme: Theme = {
   layout: {
     /* ================= GLOBAL ================= */
     fontFamily:
-      '"Inter","Plus Jakarta Sans","Segoe UI",ui-sans-serif,system-ui,-apple-system,Roboto',
+      '"Plus Jakarta Sans","Inter","Segoe UI",ui-sans-serif,system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif',
 
     cardW: 1080,
     cardH: 260,

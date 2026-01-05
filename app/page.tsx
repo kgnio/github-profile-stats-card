@@ -20,9 +20,13 @@ import { toast } from "sonner";
 
 const THEMES = [
   { key: "midnight", label: "Midnight" },
+  { key: "azure-noir", label: "Azure Noir" },
+  { key: "cyber-city", label: "Cyber City" },
+  { key: "darker-than-black", label: "Darker Than Black" },
   { key: "cupcake", label: "Cupcake" },
-  { key: "ice", label: "Ice" }, 
+  { key: "ice", label: "Ice" },
   { key: "sunset", label: "Sunset" },
+  { key: "pine-tree", label: "Pine Tree" },
 ] as const;
 
 type ThemeKey = (typeof THEMES)[number]["key"];

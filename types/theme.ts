@@ -72,6 +72,7 @@ export type Theme = {
       | "lollipop"
       | "needle"
       | "peaks"
+      | "forest"
       | "sparkareaThin";
     chartGrid: boolean;
     chartLineDash?: string;

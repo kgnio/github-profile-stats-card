@@ -28,7 +28,7 @@ export const cupcakeTheme: Theme = {
   layout: {
     /* ================= GLOBAL ================= */
     fontFamily:
-      '"Trebuchet MS","Verdana","Segoe UI",system-ui,-apple-system,Roboto',
+      '"Comic Sans MS","Trebuchet MS","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif',
 
     cardW: 1080,
     cardH: 260,

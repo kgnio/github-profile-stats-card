@@ -1,87 +1,81 @@
 import type { Theme } from "@/types/theme";
 
-export const iceTheme: Theme = {
-  name: "ice",
+export const cyberCityTheme: Theme = {
+  name: "cyber-city",
 
   colors: {
-    bgStops: ["#F6FBFF", "#EAF5FF"],
-    cardStroke: "#BFD7EA",
-    divider: "#BFD7EA",
-    panelBg: "#FFFFFF",
-    panelStroke: "#BFD7EA",
+    bgStops: ["#070412", "#0B0720"],
 
-    textStrong: "#0B1F33",
-    textMuted: "#3B637E",
-    textDim: "#6C8FA7",
+    cardStroke: "#2A1B46",
+    divider: "#2A1B46",
+    panelBg: "#0A061A",
+    panelStroke: "#2A1B46",
 
-    accentStops: ["#22D3EE", "#60A5FA", "#A5B4FC"],
-    chartFill: "#38BDF8",
+    textStrong: "#FDF4FF",
+    textMuted: "#C4B5FD",
+    textDim: "#22D3EE",
 
-    listLabel: "#0EA5E9",
-    listValue: "#0B4A6E",
-    listIcon: "#0EA5E9",
+    accentStops: ["#22D3EE", "#A78BFA", "#F472B6"],
+    chartFill: "#22D3EE",
+
+    listLabel: "#A78BFA",
+    listValue: "#E0F2FE",
+    listIcon: "#22D3EE",
 
     shadowColor: "#000000",
   },
 
   layout: {
-    /* ================= GLOBAL ================= */
     fontFamily:
-      '"Helvetica Neue","Segoe UI",-apple-system,system-ui,Roboto,Helvetica,Arial,sans-serif',
+      '"Segoe UI","SF Pro Display",-apple-system,system-ui,Roboto,Helvetica,Arial,sans-serif',
 
     cardW: 1080,
     cardH: 260,
     cardPad: 14,
 
-    /* ================= FRAME ================= */
-    radiusCard: 22,
+    radiusCard: 28,
     strokeCard: 1,
-
     shadowDx: 0,
     shadowDy: 10,
-    shadowBlur: 18,
-    shadowOpacity: 0.12,
+    shadowBlur: 16,
+    shadowOpacity: 0.18,
 
-    /* ================= DIVIDERS ================= */
     leftDividerX: 430,
     rightDividerX: 750,
     dividerTopY: 52,
     dividerBottomY: 52,
-    strokeDivider: 2,
+    strokeDivider: 1,
 
     dividerStyle: "dashed",
-    dividerDash: "2 8",
+    dividerDash: "3 7",
 
-    /* ================= ACCENT SHAPE ================= */
-    accentShapeVariant: "wave",
+    accentShapeVariant: "diagonal",
     accentShapeX1: 360,
     accentShapeX2: 140,
     accentShapeX3: 40,
     accentShapeX4: 260,
     accentShapeOpacity: 0.06,
 
-    /* ================= LEFT COLUMN ================= */
     leftColX: 48,
     leftTopY: 58,
 
-    /* ================= CHART ================= */
     chartW: 340,
     chartH: 96,
-    radiusPanel: 16,
+    radiusPanel: 18,
 
     chartPad: 14,
     chartStroke: 2.4,
 
-    chartVariant: "dots",
-    chartGrid: true,
+    chartVariant: "steps",
+    chartGrid: false,
     chartLineDash: undefined,
 
+    chartBarGap: 4,
+    chartBarRadius: 8,
     chartDotR: 3,
-    chartBarGap: 0,
-    chartBarRadius: 0,
 
     gridLines: 4,
-    gridOpacity: 0.45,
+    gridOpacity: 0.55,
 
     chartFillOpacityTop: 0.16,
     chartFillOpacityBottom: 0,
@@ -92,7 +86,6 @@ export const iceTheme: Theme = {
     chartLabelBottomPad: 3,
     chartMaxLabelY: 18,
 
-    /* ================= METRICS ================= */
     metricsY: 134,
 
     totalFontSize: 30,
@@ -109,7 +102,6 @@ export const iceTheme: Theme = {
     lastActiveValueFontSize: 12,
     lastActiveValueFontWeight: 700,
 
-    /* ================= RING ================= */
     ringCenterY: 118,
     ringYOffset: -10,
     ringR: 52,
@@ -127,14 +119,13 @@ export const iceTheme: Theme = {
     streakDescFontSize: 12,
     streakDescFontWeight: 420,
 
-    /* ================= RIGHT LIST ================= */
     listXPad: 28,
     listY: 66,
     listRowH: 32,
 
     listIconBox: 20,
     listIconDy: -15,
-    listIconOpacity: 0.9,
+    listIconOpacity: 0.92,
     listIconStroke: 2,
 
     listLabelX: 30,

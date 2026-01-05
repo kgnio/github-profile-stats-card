@@ -312,21 +312,32 @@ function renderChart(
   }
 
   if (L.chartVariant === "needle") {
-    const max = Math.max(1, ...values);
+    const max = Math.max(0, ...values);
     const denom = Math.max(1, values.length - 1);
     const iw = w - pad * 2;
     const ih = h - pad * 2;
     const baseY = pad + ih;
 
+    if (max <= 0) {
+      return `<line x1="${pad.toFixed(2)}" y1="${baseY.toFixed(2)}"
+      x2="${(w - pad).toFixed(2)}" y2="${baseY.toFixed(2)}"
+      stroke="${theme.colors.panelStroke}" stroke-width="1"
+      opacity="0.7" />`;
+    }
+
+    const strokeW = Math.max(1.6, (L.chartStroke ?? 2.4) - 0.6);
+    const r = Math.max(1.8, (L.chartDotR ?? 2.8) - 0.2);
+
     return values
       .map((v, i) => {
         const x = pad + (iw * i) / denom;
         const y = pad + ih - (ih * v) / max;
-
         return `<line x1="${x.toFixed(2)}" y1="${baseY.toFixed(2)}"
-          x2="${x.toFixed(2)}" y2="${y.toFixed(2)}"
-          stroke="url(#accent)" stroke-width="1.25" opacity="0.95"
-          stroke-linecap="round" />`;
+        x2="${x.toFixed(2)}" y2="${y.toFixed(2)}"
+        stroke="url(#accent)" stroke-width="${strokeW.toFixed(2)}"
+        opacity="0.95" stroke-linecap="round" />
+      <circle cx="${x.toFixed(2)}" cy="${y.toFixed(2)}"
+        r="${r.toFixed(2)}" fill="url(#accent)" opacity="0.98" />`;
       })
       .join("");
   }

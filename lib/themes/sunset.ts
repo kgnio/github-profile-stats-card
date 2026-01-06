@@ -4,7 +4,6 @@ export const sunsetTheme: Theme = {
   name: "sunset",
 
   colors: {
-    // warm dusk sky background
     bgStops: ["#FFF3E6", "#FFE1CF"],
     cardStroke: "#F6C3A6",
     divider: "#F6C3A6",
@@ -14,12 +13,8 @@ export const sunsetTheme: Theme = {
     textStrong: "#2B1410",
     textMuted: "#7A3E2E",
     textDim: "#B06A55",
-
-    // sunset accents (coral → orange → violet)
     accentStops: ["#FB7185", "#FB923C", "#A78BFA"],
     chartFill: "#FB923C",
-
-    // right list (warm + readable)
     listLabel: "#F97316",
     listValue: "#7C2D12",
     listIcon: "#F97316",
@@ -28,15 +23,12 @@ export const sunsetTheme: Theme = {
   },
 
   layout: {
-    /* ================= GLOBAL ================= */
     fontFamily:
       '"Plus Jakarta Sans","Inter","Segoe UI",ui-sans-serif,system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif',
 
     cardW: 1080,
     cardH: 260,
     cardPad: 14,
-
-    /* ================= FRAME ================= */
     radiusCard: 26,
     strokeCard: 1,
 
@@ -44,8 +36,6 @@ export const sunsetTheme: Theme = {
     shadowDy: 10,
     shadowBlur: 18,
     shadowOpacity: 0.11,
-
-    /* ================= DIVIDERS ================= */
     leftDividerX: 430,
     rightDividerX: 750,
     dividerTopY: 52,
@@ -54,20 +44,14 @@ export const sunsetTheme: Theme = {
 
     dividerStyle: "dashed",
     dividerDash: "12 10",
-
-    /* ================= ACCENT SHAPE ================= */
     accentShapeVariant: "diagonal",
     accentShapeX1: 360,
     accentShapeX2: 140,
     accentShapeX3: 40,
     accentShapeX4: 260,
     accentShapeOpacity: 0.05,
-
-    /* ================= LEFT COLUMN ================= */
     leftColX: 48,
     leftTopY: 58,
-
-    /* ================= CHART ================= */
     chartW: 340,
     chartH: 96,
     radiusPanel: 18,
@@ -94,8 +78,6 @@ export const sunsetTheme: Theme = {
     chartLabelRightPrefix: "max",
     chartLabelBottomPad: 3,
     chartMaxLabelY: 18,
-
-    /* ================= METRICS ================= */
     metricsY: 134,
 
     totalFontSize: 30,
@@ -111,8 +93,6 @@ export const sunsetTheme: Theme = {
     lastActiveValueX: 74,
     lastActiveValueFontSize: 12,
     lastActiveValueFontWeight: 700,
-
-    /* ================= RING ================= */
     ringCenterY: 118,
     ringYOffset: -10,
     ringR: 52,
@@ -129,8 +109,6 @@ export const sunsetTheme: Theme = {
     streakDescDy: 104,
     streakDescFontSize: 12,
     streakDescFontWeight: 420,
-
-    /* ================= RIGHT LIST ================= */
     listXPad: 28,
     listY: 66,
     listRowH: 32,

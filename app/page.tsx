@@ -220,7 +220,7 @@ export default function Home() {
                         ].join(" ")}
                       >
                         <div className="w-full sm:w-[168px] shrink-0 overflow-hidden rounded-xl border bg-background">
-                          {/* Mobile */}
+                          {/* MOBILE */}
                           <div className="relative h-[72px] w-full sm:hidden">
                             <img
                               src={previewUrl}
@@ -230,7 +230,7 @@ export default function Home() {
                             />
                           </div>
 
-                          {/* Desktop */}
+                          {/* DESKTOP */}
                           <div className="hidden sm:block">
                             <AspectRatio ratio={3 / 1}>
                               <img
@@ -571,7 +571,7 @@ export default function Home() {
           </Card>
         </section>
 
-        {/* Footer */}
+        {/* FOOTER */}
         <ProfileCardBotNav />
       </div>
     </main>

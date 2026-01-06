@@ -25,15 +25,12 @@ export const iceTheme: Theme = {
   },
 
   layout: {
-    /* ================= GLOBAL ================= */
     fontFamily:
       '"Helvetica Neue","Segoe UI",-apple-system,system-ui,Roboto,Helvetica,Arial,sans-serif',
 
     cardW: 1080,
     cardH: 260,
     cardPad: 14,
-
-    /* ================= FRAME ================= */
     radiusCard: 22,
     strokeCard: 1,
 
@@ -41,8 +38,6 @@ export const iceTheme: Theme = {
     shadowDy: 10,
     shadowBlur: 18,
     shadowOpacity: 0.12,
-
-    /* ================= DIVIDERS ================= */
     leftDividerX: 430,
     rightDividerX: 750,
     dividerTopY: 52,
@@ -51,20 +46,14 @@ export const iceTheme: Theme = {
 
     dividerStyle: "dashed",
     dividerDash: "2 8",
-
-    /* ================= ACCENT SHAPE ================= */
     accentShapeVariant: "wave",
     accentShapeX1: 360,
     accentShapeX2: 140,
     accentShapeX3: 40,
     accentShapeX4: 260,
     accentShapeOpacity: 0.06,
-
-    /* ================= LEFT COLUMN ================= */
     leftColX: 48,
     leftTopY: 58,
-
-    /* ================= CHART ================= */
     chartW: 340,
     chartH: 96,
     radiusPanel: 16,
@@ -91,8 +80,6 @@ export const iceTheme: Theme = {
     chartLabelRightPrefix: "max",
     chartLabelBottomPad: 3,
     chartMaxLabelY: 18,
-
-    /* ================= METRICS ================= */
     metricsY: 134,
 
     totalFontSize: 30,
@@ -108,8 +95,6 @@ export const iceTheme: Theme = {
     lastActiveValueX: 74,
     lastActiveValueFontSize: 12,
     lastActiveValueFontWeight: 700,
-
-    /* ================= RING ================= */
     ringCenterY: 118,
     ringYOffset: -10,
     ringR: 52,
@@ -126,8 +111,6 @@ export const iceTheme: Theme = {
     streakDescDy: 104,
     streakDescFontSize: 12,
     streakDescFontWeight: 420,
-
-    /* ================= RIGHT LIST ================= */
     listXPad: 28,
     listY: 66,
     listRowH: 32,

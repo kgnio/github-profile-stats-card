@@ -162,8 +162,8 @@
           fill="#FDA4AF" /><rect x="308.93" y="28.32"
           width="6.53" height="53.68"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="319.47" y="74.84"
-          width="6.53" height="7.16"
+          fill="#FDA4AF" /><rect x="319.47" y="67.68"
+          width="6.53" height="14.32"
           rx="8.00"
           fill="#FDA4AF" />
 
@@ -185,7 +185,7 @@
         fill="#2A1A23"
         font-size="30"
         font-weight="820">
-        2,534
+        2,536
       </text>
 
       <text x="104" y="0"
@@ -269,7 +269,7 @@
             fill="#A31555"
             font-size="14.5"
             font-weight="850">
-            56
+            61
           </text>
         </g>
         <g transform="translate(0,32)">

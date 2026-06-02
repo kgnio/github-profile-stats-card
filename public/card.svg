@@ -162,8 +162,8 @@
           fill="#FDA4AF" /><rect x="308.93" y="46.21"
           width="6.53" height="35.79"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="319.47" y="82.00"
-          width="6.53" height="0.00"
+          fill="#FDA4AF" /><rect x="319.47" y="78.42"
+          width="6.53" height="3.58"
           rx="8.00"
           fill="#FDA4AF" />
 
@@ -185,7 +185,7 @@
         fill="#2A1A23"
         font-size="30"
         font-weight="820">
-        2,579
+        2,580
       </text>
 
       <text x="104" y="0"
@@ -205,7 +205,7 @@
         fill="#2A1A23"
         font-size="12"
         font-weight="700">
-        2026-06-01
+        2026-06-02
       </text>
     </g>
   </g>
@@ -219,7 +219,7 @@
       stroke="url(#accent)"
       stroke-width="10"
       stroke-linecap="round"
-      stroke-dasharray="0.00 326.73"
+      stroke-dasharray="326.73 326.73"
       transform="rotate(-90 590 108)" />
 
     <text x="590" y="124.00"
@@ -227,7 +227,7 @@
       fill="#2A1A23"
       font-size="40"
       font-weight="900">
-      0
+      273
     </text>
 
     <text x="590" y="192.00"
@@ -235,7 +235,7 @@
       fill="#8B5B72"
       font-size="14"
       font-weight="450">
-      0-day commit streak
+      273-day commit streak
     </text>
 
     <text x="590" y="212.00"
@@ -243,7 +243,7 @@
       fill="#B07A93"
       font-size="12"
       font-weight="420">
-      Coding consistently for 0 days in a row.
+      Coding consistently for 273 days in a row.
     </text>
   </g>
 
@@ -269,7 +269,7 @@
             fill="#A31555"
             font-size="14.5"
             font-weight="850">
-            113
+            114
           </text>
         </g>
         <g transform="translate(0,32)">

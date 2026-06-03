@@ -75,68 +75,68 @@
 
     
 
-    <rect x="14.00" y="64.11"
-          width="6.53" height="17.89"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="24.53" y="56.95"
+    <rect x="14.00" y="56.95"
           width="6.53" height="25.05"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="35.07" y="64.11"
+          fill="#FDA4AF" /><rect x="24.53" y="64.11"
           width="6.53" height="17.89"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="45.60" y="28.32"
+          fill="#FDA4AF" /><rect x="35.07" y="28.32"
           width="6.53" height="53.68"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="45.60" y="67.68"
+          width="6.53" height="14.32"
           rx="8.00"
           fill="#FDA4AF" /><rect x="56.13" y="67.68"
           width="6.53" height="14.32"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="66.67" y="67.68"
-          width="6.53" height="14.32"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="77.20" y="42.63"
+          fill="#FDA4AF" /><rect x="66.67" y="42.63"
           width="6.53" height="39.37"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="87.73" y="67.68"
+          fill="#FDA4AF" /><rect x="77.20" y="67.68"
           width="6.53" height="14.32"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="98.27" y="60.53"
+          fill="#FDA4AF" /><rect x="87.73" y="60.53"
           width="6.53" height="21.47"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="108.80" y="35.47"
+          fill="#FDA4AF" /><rect x="98.27" y="35.47"
           width="6.53" height="46.53"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="119.33" y="60.53"
+          fill="#FDA4AF" /><rect x="108.80" y="60.53"
           width="6.53" height="21.47"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="119.33" y="67.68"
+          width="6.53" height="14.32"
           rx="8.00"
           fill="#FDA4AF" /><rect x="129.87" y="67.68"
           width="6.53" height="14.32"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="140.40" y="67.68"
-          width="6.53" height="14.32"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="150.93" y="56.95"
+          fill="#FDA4AF" /><rect x="140.40" y="56.95"
           width="6.53" height="25.05"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="161.47" y="67.68"
+          fill="#FDA4AF" /><rect x="150.93" y="67.68"
           width="6.53" height="14.32"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="172.00" y="14.00"
+          fill="#FDA4AF" /><rect x="161.47" y="14.00"
           width="6.53" height="68.00"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="182.53" y="49.79"
+          fill="#FDA4AF" /><rect x="172.00" y="49.79"
           width="6.53" height="32.21"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="193.07" y="28.32"
+          fill="#FDA4AF" /><rect x="182.53" y="28.32"
           width="6.53" height="53.68"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="193.07" y="67.68"
+          width="6.53" height="14.32"
           rx="8.00"
           fill="#FDA4AF" /><rect x="203.60" y="67.68"
           width="6.53" height="14.32"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="214.13" y="67.68"
-          width="6.53" height="14.32"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="224.67" y="64.11"
+          fill="#FDA4AF" /><rect x="214.13" y="64.11"
           width="6.53" height="17.89"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="224.67" y="67.68"
+          width="6.53" height="14.32"
           rx="8.00"
           fill="#FDA4AF" /><rect x="235.20" y="67.68"
           width="6.53" height="14.32"
@@ -153,17 +153,17 @@
           fill="#FDA4AF" /><rect x="277.33" y="67.68"
           width="6.53" height="14.32"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="287.87" y="67.68"
-          width="6.53" height="14.32"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="298.40" y="46.21"
+          fill="#FDA4AF" /><rect x="287.87" y="46.21"
           width="6.53" height="35.79"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="308.93" y="49.79"
+          fill="#FDA4AF" /><rect x="298.40" y="49.79"
           width="6.53" height="32.21"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="319.47" y="64.11"
-          width="6.53" height="17.89"
+          fill="#FDA4AF" /><rect x="308.93" y="60.53"
+          width="6.53" height="21.47"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="319.47" y="82.00"
+          width="6.53" height="0.00"
           rx="8.00"
           fill="#FDA4AF" />
 
@@ -185,7 +185,7 @@
         fill="#2A1A23"
         font-size="30"
         font-weight="820">
-        2,593
+        2,594
       </text>
 
       <text x="104" y="0"
@@ -219,7 +219,7 @@
       stroke="url(#accent)"
       stroke-width="10"
       stroke-linecap="round"
-      stroke-dasharray="326.73 326.73"
+      stroke-dasharray="0.00 326.73"
       transform="rotate(-90 590 108)" />
 
     <text x="590" y="124.00"
@@ -227,7 +227,7 @@
       fill="#2A1A23"
       font-size="40"
       font-weight="900">
-      274
+      0
     </text>
 
     <text x="590" y="192.00"
@@ -235,7 +235,7 @@
       fill="#8B5B72"
       font-size="14"
       font-weight="450">
-      274-day commit streak
+      0-day commit streak
     </text>
 
     <text x="590" y="212.00"
@@ -243,7 +243,7 @@
       fill="#B07A93"
       font-size="12"
       font-weight="420">
-      Coding consistently for 274 days in a row.
+      Coding consistently for 0 days in a row.
     </text>
   </g>
 

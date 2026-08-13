@@ -162,8 +162,8 @@
           fill="#FDA4AF" /><rect x="308.93" y="34.32"
           width="6.53" height="47.68"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="319.47" y="59.33"
-          width="6.53" height="22.67"
+          fill="#FDA4AF" /><rect x="319.47" y="39.79"
+          width="6.53" height="42.21"
           rx="8.00"
           fill="#FDA4AF" />
 
@@ -185,7 +185,7 @@
         fill="#2A1A23"
         font-size="30"
         font-weight="820">
-        3,340
+        3,365
       </text>
 
       <text x="104" y="0"
@@ -269,7 +269,7 @@
             fill="#A31555"
             font-size="14.5"
             font-weight="850">
-            237
+            238
           </text>
         </g>
         <g transform="translate(0,32)">
@@ -295,7 +295,7 @@
             fill="#A31555"
             font-size="14.5"
             font-weight="850">
-            3.2k
+            3.3k
           </text>
         </g>
         <g transform="translate(0,64)">
@@ -321,7 +321,7 @@
             fill="#A31555"
             font-size="14.5"
             font-weight="850">
-            51
+            53
           </text>
         </g>
         <g transform="translate(0,96)">

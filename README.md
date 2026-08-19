@@ -1,26 +1,17 @@
-# GitHub Profile Stats Card (SVG)
+# GitHub Profile Stats Card
 
-A simple, themeable **SVG profile card** that you can embed directly into your GitHub README.
-No image uploads, no manual updates — just a single URL.
+A customizable **GitHub profile stats card generator** for GitHub Profile READMEs.
 
-👉 **Live demo & theme gallery:**  
+Create dynamic SVG stats cards for your GitHub profile with multiple themes and embed them directly into your README — no installation, image uploads, or manual updates required.
+
+👉 **Generate your card & explore themes:**  
 https://kgnio-profile-card.vercel.app/
 
----
+## Quick Start
 
-## What does this do?
+Add this single line to your GitHub Profile README:
 
-This project generates a **dynamic SVG card** for GitHub profiles.
-
-You embed it in your README like a normal image, but the image is generated on demand.
-That means:
-
-- Always crisp (SVG, not PNG)
-- No assets to upload
-- One line to embed anywhere
-- Works in profile READMEs and repo READMEs
-
----
+![GitHub Profile Stats](https://kgnio-profile-card.vercel.app/api/card?user=YOUR_USERNAME&theme=midnight)
 
 ## How often does it update?
 

@@ -84,6 +84,56 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+
+  name: "GitHub Profile Stats Card",
+  alternateName: "GitHub Profile Stats Card Generator",
+
+  url: "https://kgnio-profile-card.vercel.app",
+
+  description:
+    "A customizable GitHub profile stats card generator for GitHub Profile READMEs. Generate dynamic SVG statistics cards with multiple themes and embed them with one line of Markdown.",
+
+  applicationCategory: "DeveloperApplication",
+  operatingSystem: "Any",
+
+  browserRequirements: "Requires a modern web browser",
+
+  isAccessibleForFree: true,
+
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
+  },
+
+  featureList: [
+    "Generate dynamic GitHub profile stats cards",
+    "Multiple customizable themes",
+    "Dynamic SVG output",
+    "GitHub Profile README integration",
+    "One-line Markdown embed",
+    "Live card preview",
+    "Hosted profile card generation",
+    "GitHub Actions self-hosting support",
+  ],
+
+  author: {
+    "@type": "Person",
+    name: "kgnio",
+    url: "https://github.com/kgnio",
+  },
+
+  sameAs: [
+    "https://github.com/kgnio/github-profile-stats-card",
+  ],
+
+  keywords:
+    "GitHub profile, GitHub Profile README, GitHub stats card, GitHub README widget, GitHub profile card, developer profile, SVG stats card",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -94,7 +144,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+          }}
+        />
+
         {children}
+
         <Toaster richColors position="bottom-right" />
       </body>
     </html>

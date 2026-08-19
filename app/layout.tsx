@@ -14,8 +14,74 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Github Profile Stats Card",
-  description: "Kgnio github profile stats card generator",
+  metadataBase: new URL("https://kgnio-profile-card.vercel.app"),
+
+  title: {
+    default: "GitHub Profile Stats Card Generator",
+    template: "%s | GitHub Profile Stats Card",
+  },
+
+  description:
+    "Generate customizable GitHub profile stats cards for your GitHub Profile README. Choose a theme and embed a dynamic SVG card with one line of Markdown.",
+
+  keywords: [
+    "GitHub profile",
+    "GitHub profile README",
+    "GitHub stats",
+    "GitHub stats card",
+    "GitHub profile stats",
+    "GitHub README",
+    "GitHub README generator",
+    "GitHub README widget",
+    "GitHub profile card",
+    "GitHub badges",
+    "developer profile",
+    "developer portfolio",
+    "README stats",
+    "SVG profile card",
+  ],
+
+  authors: [
+    {
+      name: "kgnio",
+      url: "https://github.com/kgnio",
+    },
+  ],
+
+  creator: "kgnio",
+  publisher: "kgnio",
+
+  alternates: {
+    canonical: "/",
+  },
+
+  openGraph: {
+    type: "website",
+    url: "https://kgnio-profile-card.vercel.app",
+    title: "GitHub Profile Stats Card Generator",
+    description:
+      "Create customizable GitHub profile stats cards and embed them directly into your GitHub Profile README.",
+    siteName: "GitHub Profile Stats Card",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "GitHub Profile Stats Card Generator",
+    description:
+      "Generate customizable GitHub stats cards for your GitHub Profile README.",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
 export default function RootLayout({

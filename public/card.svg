@@ -75,8 +75,8 @@
 
     
 
-    <rect x="14.00" y="66.39"
-          width="6.53" height="15.61"
+    <rect x="14.00" y="76.43"
+          width="6.53" height="5.57"
           rx="8.00"
           fill="#FDA4AF" /><rect x="24.53" y="76.43"
           width="6.53" height="5.57"
@@ -102,68 +102,68 @@
           fill="#FDA4AF" /><rect x="98.27" y="76.43"
           width="6.53" height="5.57"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="108.80" y="76.43"
-          width="6.53" height="5.57"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="119.33" y="50.79"
+          fill="#FDA4AF" /><rect x="108.80" y="50.79"
           width="6.53" height="31.21"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="129.87" y="58.59"
+          fill="#FDA4AF" /><rect x="119.33" y="58.59"
           width="6.53" height="23.41"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="140.40" y="14.00"
+          fill="#FDA4AF" /><rect x="129.87" y="14.00"
           width="6.53" height="68.00"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="150.93" y="16.23"
+          fill="#FDA4AF" /><rect x="140.40" y="16.23"
           width="6.53" height="65.77"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="161.47" y="68.62"
+          fill="#FDA4AF" /><rect x="150.93" y="68.62"
           width="6.53" height="13.38"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="161.47" y="76.43"
+          width="6.53" height="5.57"
           rx="8.00"
           fill="#FDA4AF" /><rect x="172.00" y="76.43"
           width="6.53" height="5.57"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="182.53" y="76.43"
-          width="6.53" height="5.57"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="193.07" y="69.74"
+          fill="#FDA4AF" /><rect x="182.53" y="69.74"
           width="6.53" height="12.26"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="203.60" y="73.08"
+          fill="#FDA4AF" /><rect x="193.07" y="73.08"
           width="6.53" height="8.92"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="203.60" y="69.74"
+          width="6.53" height="12.26"
           rx="8.00"
           fill="#FDA4AF" /><rect x="214.13" y="69.74"
           width="6.53" height="12.26"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="224.67" y="69.74"
-          width="6.53" height="12.26"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="235.20" y="68.62"
+          fill="#FDA4AF" /><rect x="224.67" y="68.62"
           width="6.53" height="13.38"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="235.20" y="76.43"
+          width="6.53" height="5.57"
           rx="8.00"
           fill="#FDA4AF" /><rect x="245.73" y="76.43"
           width="6.53" height="5.57"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="256.27" y="76.43"
-          width="6.53" height="5.57"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="266.80" y="71.97"
+          fill="#FDA4AF" /><rect x="256.27" y="71.97"
           width="6.53" height="10.03"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="277.33" y="73.08"
+          fill="#FDA4AF" /><rect x="266.80" y="73.08"
           width="6.53" height="8.92"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="287.87" y="70.85"
+          fill="#FDA4AF" /><rect x="277.33" y="70.85"
           width="6.53" height="11.15"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="298.40" y="68.62"
+          fill="#FDA4AF" /><rect x="287.87" y="68.62"
           width="6.53" height="13.38"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="308.93" y="71.97"
+          fill="#FDA4AF" /><rect x="298.40" y="71.97"
           width="6.53" height="10.03"
           rx="8.00"
-          fill="#FDA4AF" /><rect x="319.47" y="76.43"
+          fill="#FDA4AF" /><rect x="308.93" y="76.43"
           width="6.53" height="5.57"
+          rx="8.00"
+          fill="#FDA4AF" /><rect x="319.47" y="80.89"
+          width="6.53" height="1.11"
           rx="8.00"
           fill="#FDA4AF" />
 
@@ -185,7 +185,7 @@
         fill="#2A1A23"
         font-size="30"
         font-weight="820">
-        3,384
+        3,339
       </text>
 
       <text x="104" y="0"
@@ -205,7 +205,7 @@
         fill="#2A1A23"
         font-size="12"
         font-weight="700">
-        2026-08-29
+        2026-08-30
       </text>
     </g>
   </g>
@@ -227,7 +227,7 @@
       fill="#2A1A23"
       font-size="40"
       font-weight="900">
-      361
+      362
     </text>
 
     <text x="590" y="192.00"
@@ -235,7 +235,7 @@
       fill="#8B5B72"
       font-size="14"
       font-weight="450">
-      361-day commit streak
+      362-day commit streak
     </text>
 
     <text x="590" y="212.00"
@@ -243,7 +243,7 @@
       fill="#B07A93"
       font-size="12"
       font-weight="420">
-      Coding consistently for 361 days in a row.
+      Coding consistently for 362 days in a row.
     </text>
   </g>
 

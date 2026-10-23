@@ -4,34 +4,34 @@
 
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1080" y2="260" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#FFF8FC"/>
-      <stop offset="1" stop-color="#FFEFF8"/>
+      <stop stop-color="#070412"/>
+      <stop offset="1" stop-color="#0B0720"/>
     </linearGradient>
 
     <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#FDA4AF"/><stop offset="0.5" stop-color="#C4B5FD"/><stop offset="1" stop-color="#FCD34D"/>
+      <stop offset="0" stop-color="#22D3EE"/><stop offset="0.5" stop-color="#A78BFA"/><stop offset="1" stop-color="#F472B6"/>
     </linearGradient>
 
     <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
-      <stop stop-color="#FDA4AF" stop-opacity="0.18"/>
-      <stop offset="1" stop-color="#FDA4AF" stop-opacity="0"/>
+      <stop stop-color="#22D3EE" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#22D3EE" stop-opacity="0"/>
     </linearGradient>
 
     <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
       <feDropShadow dx="0" dy="10"
         stdDeviation="16"
         flood-color="#000000"
-        flood-opacity="0.1" />
+        flood-opacity="0.18" />
     </filter>
 
     <style>
-      text { font-family: "Comic Sans MS","Trebuchet MS","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif; dominant-baseline: alphabetic; }
+      text { font-family: "Segoe UI","SF Pro Display",-apple-system,system-ui,Roboto,Helvetica,Arial,sans-serif; dominant-baseline: alphabetic; }
     </style>
   </defs>
 
   <rect x="14" y="14" width="1052" height="232"
     rx="28" fill="url(#bg)"
-    stroke="#F4C7DD"
+    stroke="#2A1B46"
     stroke-width="1"
     filter="url(#shadow)" />
 
@@ -39,10 +39,10 @@
     L940 14
     L1040 246
     L820 246 Z"
-    fill="url(#accent)" opacity="0.04" />
+    fill="url(#accent)" opacity="0.06" />
   
     <line x1="430" y1="52" x2="430" y2="208"
-      stroke="#F4C7DD"
+      stroke="#2A1B46"
       stroke-width="1"
       stroke-dasharray="3 7"
       opacity="0.85" />
@@ -55,7 +55,7 @@
   
   
     <line x1="750" y1="52" x2="750" y2="208"
-      stroke="#F4C7DD"
+      stroke="#2A1B46"
       stroke-width="1"
       stroke-dasharray="3 7"
       opacity="0.85" />
@@ -70,180 +70,96 @@
   <g transform="translate(48,58)">
     <rect x="0" y="0" width="340" height="96"
       rx="18"
-      fill="#FFFFFF"
-      stroke="#F4C7DD" />
+      fill="#0A061A"
+      stroke="#2A1B46" />
 
     
 
-    <rect x="14.00" y="40.44"
-          width="6.53" height="41.56"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="24.53" y="36.67"
-          width="6.53" height="45.33"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="35.07" y="63.11"
-          width="6.53" height="18.89"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="45.60" y="63.11"
-          width="6.53" height="18.89"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="56.13" y="48.00"
-          width="6.53" height="34.00"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="66.67" y="51.78"
-          width="6.53" height="30.22"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="77.20" y="44.22"
-          width="6.53" height="37.78"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="87.73" y="36.67"
-          width="6.53" height="45.33"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="98.27" y="48.00"
-          width="6.53" height="34.00"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="108.80" y="63.11"
-          width="6.53" height="18.89"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="119.33" y="63.11"
-          width="6.53" height="18.89"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="129.87" y="14.00"
-          width="6.53" height="68.00"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="140.40" y="40.44"
-          width="6.53" height="41.56"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="150.93" y="55.56"
-          width="6.53" height="26.44"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="161.47" y="55.56"
-          width="6.53" height="26.44"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="172.00" y="51.78"
-          width="6.53" height="30.22"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="182.53" y="63.11"
-          width="6.53" height="18.89"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="193.07" y="63.11"
-          width="6.53" height="18.89"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="203.60" y="63.11"
-          width="6.53" height="18.89"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="214.13" y="63.11"
-          width="6.53" height="18.89"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="224.67" y="59.33"
-          width="6.53" height="22.67"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="235.20" y="55.56"
-          width="6.53" height="26.44"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="245.73" y="55.56"
-          width="6.53" height="26.44"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="256.27" y="63.11"
-          width="6.53" height="18.89"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="266.80" y="63.11"
-          width="6.53" height="18.89"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="277.33" y="51.78"
-          width="6.53" height="30.22"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="287.87" y="63.11"
-          width="6.53" height="18.89"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="298.40" y="55.56"
-          width="6.53" height="26.44"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="308.93" y="63.11"
-          width="6.53" height="18.89"
-          rx="8.00"
-          fill="#FDA4AF" /><rect x="319.47" y="55.56"
-          width="6.53" height="26.44"
-          rx="8.00"
-          fill="#FDA4AF" />
+    <path d="M 14.00 82.00 L 24.76 82.00 L 24.76 82.00 L 35.52 82.00 L 35.52 82.00 L 46.28 82.00 L 46.28 82.00 L 57.03 82.00 L 57.03 82.00 L 67.79 82.00 L 67.79 82.00 L 78.55 82.00 L 78.55 82.00 L 89.31 82.00 L 89.31 82.00 L 100.07 82.00 L 100.07 82.00 L 110.83 82.00 L 110.83 82.00 L 121.59 82.00 L 121.59 82.00 L 132.34 82.00 L 132.34 82.00 L 143.10 82.00 L 143.10 82.00 L 153.86 82.00 L 153.86 82.00 L 164.62 82.00 L 164.62 82.00 L 175.38 82.00 L 175.38 82.00 L 186.14 82.00 L 186.14 82.00 L 196.90 82.00 L 196.90 82.00 L 207.66 82.00 L 207.66 82.00 L 218.41 82.00 L 218.41 82.00 L 229.17 82.00 L 229.17 82.00 L 239.93 82.00 L 239.93 82.00 L 250.69 82.00 L 250.69 82.00 L 261.45 82.00 L 261.45 82.00 L 272.21 82.00 L 272.21 82.00 L 282.97 82.00 L 282.97 82.00 L 293.72 82.00 L 293.72 82.00 L 304.48 82.00 L 304.48 68.40 L 315.24 68.40 L 315.24 41.20 L 326.00 41.20 L 326.00 14.00"
+      stroke="url(#accent)"
+      stroke-width="2.4"
+      fill="none"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-dasharray="none" />
 
     <text x="14" y="93.00"
-      fill="#B07A93"
+      fill="#22D3EE"
       font-size="11">
       Last 30 days
     </text>
 
     <text x="326.00" y="18"
       text-anchor="end"
-      fill="#B07A93"
+      fill="#22D3EE"
       font-size="11">
-      max 18
+      max 5
     </text>
 
     <g transform="translate(0,134)">
       <text x="0" y="0"
-        fill="#2A1A23"
+        fill="#FDF4FF"
         font-size="30"
         font-weight="820">
-        3,405
+        3,162
       </text>
 
       <text x="104" y="0"
-        fill="#8B5B72"
+        fill="#C4B5FD"
         font-size="14"
         font-weight="650">
         Total contributions
       </text>
 
       <text x="0" y="30"
-        fill="#B07A93"
+        fill="#22D3EE"
         font-size="12">
         Last active
       </text>
 
       <text x="74" y="30"
-        fill="#2A1A23"
+        fill="#FDF4FF"
         font-size="12"
         font-weight="700">
-        2026-09-18
+        2026-10-23
       </text>
     </g>
   </g>
 
   <g>
     <circle cx="590" cy="108" r="52"
-      stroke="#F4C7DD"
+      stroke="#2A1B46"
       stroke-width="10" />
 
     <circle cx="590" cy="108" r="52"
       stroke="url(#accent)"
       stroke-width="10"
       stroke-linecap="round"
-      stroke-dasharray="326.73 326.73"
+      stroke-dasharray="2.93 326.73"
       transform="rotate(-90 590 108)" />
 
     <text x="590" y="124.00"
       text-anchor="middle"
-      fill="#2A1A23"
+      fill="#FDF4FF"
       font-size="40"
       font-weight="900">
-      370
+      3
     </text>
 
     <text x="590" y="192.00"
       text-anchor="middle"
-      fill="#8B5B72"
+      fill="#C4B5FD"
       font-size="14"
       font-weight="450">
-      370-day commit streak
+      3-day commit streak
     </text>
 
     <text x="590" y="212.00"
       text-anchor="middle"
-      fill="#B07A93"
+      fill="#22D3EE"
       font-size="12"
       font-weight="420">
-      Coding consistently for 370 days in a row.
+      Coding consistently for 3 days in a row.
     </text>
   </g>
 
@@ -254,22 +170,22 @@
             <svg x="0" y="0" width="20" height="20"
               viewBox="0 0 24 24" fill="none"
               xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2.2l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.7 6.1 20.2l1.2-6.5-4.8-4.6 6.6-.9L12 2.2z" fill="#E11D7B" opacity="0.92"/>
+              <path d="M12 2.2l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.7 6.1 20.2l1.2-6.5-4.8-4.6 6.6-.9L12 2.2z" fill="#22D3EE" opacity="0.92"/>
             </svg>
           </g>
 
           <text x="30" y="0"
-            fill="#E11D7B"
+            fill="#A78BFA"
             font-size="14.5"
             font-weight="650">
             Total Stars:
           </text>
 
           <text x="186" y="0"
-            fill="#A31555"
+            fill="#E0F2FE"
             font-size="14.5"
             font-weight="850">
-            333
+            221
           </text>
         </g>
         <g transform="translate(0,32)">
@@ -277,7 +193,7 @@
             <svg x="0" y="0" width="20" height="20"
               viewBox="0 0 24 24" fill="none"
               xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 12a3 3 0 1 0 6 0Zm-7 0h4m8 0h8" stroke="#E11D7B"
+              <path d="M9 12a3 3 0 1 0 6 0Zm-7 0h4m8 0h8" stroke="#22D3EE"
               stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round"
               opacity="0.92" />
@@ -285,17 +201,17 @@
           </g>
 
           <text x="30" y="0"
-            fill="#E11D7B"
+            fill="#A78BFA"
             font-size="14.5"
             font-weight="650">
             Total Commits:
           </text>
 
           <text x="186" y="0"
-            fill="#A31555"
+            fill="#E0F2FE"
             font-size="14.5"
             font-weight="850">
-            3.3k
+            3.1k
           </text>
         </g>
         <g transform="translate(0,64)">
@@ -303,7 +219,7 @@
             <svg x="0" y="0" width="20" height="20"
               viewBox="0 0 24 24" fill="none"
               xmlns="http://www.w3.org/2000/svg">
-              <path d="M6 4v16m0-13a2 2 0 1 0 0-4Zm0 14a2 2 0 1 0 0-4Zm6-14h6a2 2 0 0 1 2 2v7m0 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" stroke="#E11D7B"
+              <path d="M6 4v16m0-13a2 2 0 1 0 0-4Zm0 14a2 2 0 1 0 0-4Zm6-14h6a2 2 0 0 1 2 2v7m0 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" stroke="#22D3EE"
               stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round"
               opacity="0.92" />
@@ -311,14 +227,14 @@
           </g>
 
           <text x="30" y="0"
-            fill="#E11D7B"
+            fill="#A78BFA"
             font-size="14.5"
             font-weight="650">
             Total PRs:
           </text>
 
           <text x="186" y="0"
-            fill="#A31555"
+            fill="#E0F2FE"
             font-size="14.5"
             font-weight="850">
             78
@@ -329,7 +245,7 @@
             <svg x="0" y="0" width="20" height="20"
               viewBox="0 0 24 24" fill="none"
               xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2a10 10 0 1 0 0 20Zm0 6v6m0 4h.01" stroke="#E11D7B"
+              <path d="M12 2a10 10 0 1 0 0 20Zm0 6v6m0 4h.01" stroke="#22D3EE"
               stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round"
               opacity="0.92" />
@@ -337,17 +253,17 @@
           </g>
 
           <text x="30" y="0"
-            fill="#E11D7B"
+            fill="#A78BFA"
             font-size="14.5"
             font-weight="650">
             Total Issues:
           </text>
 
           <text x="186" y="0"
-            fill="#A31555"
+            fill="#E0F2FE"
             font-size="14.5"
             font-weight="850">
-            2
+            0
           </text>
         </g>
         <g transform="translate(0,128)">
@@ -355,7 +271,7 @@
             <svg x="0" y="0" width="20" height="20"
               viewBox="0 0 24 24" fill="none"
               xmlns="http://www.w3.org/2000/svg">
-              <path d="M4 6h16M4 10h16M4 14h16M4 18h16" stroke="#E11D7B"
+              <path d="M4 6h16M4 10h16M4 14h16M4 18h16" stroke="#22D3EE"
               stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round"
               opacity="0.92" />
@@ -363,17 +279,17 @@
           </g>
 
           <text x="30" y="0"
-            fill="#E11D7B"
+            fill="#A78BFA"
             font-size="14.5"
             font-weight="650">
             Contributed to:
           </text>
 
           <text x="186" y="0"
-            fill="#A31555"
+            fill="#E0F2FE"
             font-size="14.5"
             font-weight="850">
-            54
+            39
           </text>
         </g>
   </g>
